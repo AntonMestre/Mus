@@ -30,6 +30,13 @@ public class InterfaceJoueurHumain implements InterfaceJoueur {
   public List<Carte> cartesAJeter() {
     println("Veuillez saisir les cartes à jeter (ex: 1,3) :");
     String aJeter = scanner.next();
+
+    return getCartes(aJeter);
+  }
+
+  private List<Carte> getCartes(String aJeter) {
+
+
     return Arrays.stream(aJeter.split(","))
       .mapToInt(Integer::parseInt)
       .mapToObj(indiceCarte -> main.cartesDuPlusGrandAuPlusPetit().get(indiceCarte - 1))
