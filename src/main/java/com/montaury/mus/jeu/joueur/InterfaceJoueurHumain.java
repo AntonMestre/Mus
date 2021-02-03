@@ -30,36 +30,40 @@ public class InterfaceJoueurHumain implements InterfaceJoueur {
   public List<Carte> cartesAJeter() {
     String[] saisieUtilisateur;
     int caseCourante = 0;
-    boolean saisieCorrecte = false;
-    boolean estEntier = false;
+    boolean saisieCorrecte = true;
 
     println("Veuillez saisir les cartes à jeter (ex: 1,3) :");
     String aJeter = scanner.next();
 
+    /*
+     * /!\ Hop Hop Hop Antonin, ça marche avec ce code il y aura juste à gérer le cas ou on met juste une "," (jsp pk ça marche pas) mais à part ça c'est ok
+     */
+
     while (true) {
       saisieUtilisateur = aJeter.split(",");
+        saisieCorrecte = true;
 
-      if (saisieUtilisateur.length <= 4) {
-        for (int i = 0; i < saisieUtilisateur.length; i++) {
+      if (saisieUtilisateur.length > 4) {
+        saisieCorrecte = false;
+        println("Attention ! Vous avez inséré trop de cartes. Maximum = 4");
+      }
 
-          try {
-            estEntier = true;
-            caseCourante = Integer.parseInt(saisieUtilisateur[i]);
+      for (int i = 0; i < saisieUtilisateur.length; i++) {
+        try {
+          caseCourante = Integer.parseInt(saisieUtilisateur[i]);
 
-          } catch (final NumberFormatException e) {
-            estEntier = false;
-          }
-
-          if ((caseCourante >= 1 && caseCourante <= 4) && estEntier) {
-            saisieCorrecte = true;
-          }
-          else {
-            saisieCorrecte = false;
-          }
+        } catch (final NumberFormatException e) {
+          saisieCorrecte = false;
+          println("Attention ! Votre valeur n°" + (i+1) + " (" + saisieUtilisateur[i] + ") " + " doit être une valeur entière.");
+          break;
+        }
+        if (caseCourante < 1 || caseCourante > 4) {
+          saisieCorrecte = false;
+          println("Attention ! Votre carte n°" + (i+1) + " (" + saisieUtilisateur[i] + ") " + " doit être une valeur comprise entre 1 et 4.");
         }
       }
 
-      if (!saisieCorrecte) {
+      if (saisieCorrecte) {
         break;
       }
 
