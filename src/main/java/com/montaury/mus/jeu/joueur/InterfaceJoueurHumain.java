@@ -28,19 +28,49 @@ public class InterfaceJoueurHumain implements InterfaceJoueur {
 
   @Override
   public List<Carte> cartesAJeter() {
+    String[] saisieUtilisateur;
+    int caseCourante = 0;
+    boolean saisieCorrecte = false;
+    boolean estEntier = false;
+
     println("Veuillez saisir les cartes à jeter (ex: 1,3) :");
     String aJeter = scanner.next();
 
-    return getCartes(aJeter);
-  }
+    while (true) {
+      saisieUtilisateur = aJeter.split(",");
 
-  private List<Carte> getCartes(String aJeter) {
+      if (saisieUtilisateur.length <= 4) {
+        for (int i = 0; i < saisieUtilisateur.length; i++) {
 
+          try {
+            estEntier = true;
+            caseCourante = Integer.parseInt(saisieUtilisateur[i]);
+
+          } catch (final NumberFormatException e) {
+            estEntier = false;
+          }
+
+          if ((caseCourante >= 1 && caseCourante <= 4) && estEntier) {
+            saisieCorrecte = true;
+          }
+          else {
+            saisieCorrecte = false;
+          }
+        }
+      }
+
+      if (!saisieCorrecte) {
+        break;
+      }
+
+      println("Saisie incorrecte, veuillez ressaisir :");
+      aJeter = scanner.next();
+    }
 
     return Arrays.stream(aJeter.split(","))
-      .mapToInt(Integer::parseInt)
-      .mapToObj(indiceCarte -> main.cartesDuPlusGrandAuPlusPetit().get(indiceCarte - 1))
-      .collect(Collectors.toList());
+            .mapToInt(Integer::parseInt)
+            .mapToObj(indiceCarte -> main.cartesDuPlusGrandAuPlusPetit().get(indiceCarte - 1))
+            .collect(Collectors.toList());
   }
 
   @Override

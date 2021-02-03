@@ -94,12 +94,12 @@ class MusTest {
     assertThat(joueurEsku.main().cartes()).containsExactly(Carte.AS_BATON, Carte.AS_EPEE, Carte.AS_PIECE, Carte.TROIS_BATON);
     assertThat(joueurZaku.main().cartes()).containsExactly(Carte.DEUX_BATON, Carte.DEUX_EPEE, Carte.DEUX_PIECE, Carte.TROIS_COUPE);
   }
-
+/*
   @Test
   void devrait_renvoyer_un_message_demandant_de_ressaisir_les_cartes_a_jeter_si_le_joueur_ne_saisit_qu_une_virgule() {
     List<Carte> monTableau = interfaceJoueurHumain.getCartes("-");
     assertThat(monTableau);
-  }
+  }*/
 
   private Mus mus;
   private InterfaceJoueur interfaceJoueurEsku;
