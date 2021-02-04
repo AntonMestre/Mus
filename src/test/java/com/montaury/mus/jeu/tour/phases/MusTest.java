@@ -2,10 +2,8 @@ package com.montaury.mus.jeu.tour.phases;
 
 import com.montaury.mus.jeu.carte.Carte;
 import com.montaury.mus.jeu.carte.Defausse;
-import com.montaury.mus.jeu.joueur.AffichageConsoleEvenementsDeJeu;
-import com.montaury.mus.jeu.joueur.InterfaceJoueur;
-import com.montaury.mus.jeu.joueur.Joueur;
-import com.montaury.mus.jeu.joueur.Opposants;
+import com.montaury.mus.jeu.joueur.*;
+
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -94,16 +92,19 @@ class MusTest {
     assertThat(joueurEsku.main().cartes()).containsExactly(Carte.AS_BATON, Carte.AS_EPEE, Carte.AS_PIECE, Carte.TROIS_BATON);
     assertThat(joueurZaku.main().cartes()).containsExactly(Carte.DEUX_BATON, Carte.DEUX_EPEE, Carte.DEUX_PIECE, Carte.TROIS_COUPE);
   }
-/*
+
+
   @Test
-  void devrait_renvoyer_un_message_demandant_de_ressaisir_les_cartes_a_jeter_si_le_joueur_ne_saisit_qu_une_virgule() {
-    List<Carte> monTableau = interfaceJoueurHumain.getCartes("-");
-    assertThat(monTableau);
-  }*/
+  void devrait_renvoyer_faux_si_le_joueur_ne_saisit_que_des_virgules() {
+    String saisieUtilisateur = ",";
+
+    assertThat(monInterfaceHumain.cartesAJeterCorrectes(saisieUtilisateur)).isEqualTo(false);
+  }
 
   private Mus mus;
   private InterfaceJoueur interfaceJoueurEsku;
   private InterfaceJoueur interfaceJoueurZaku;
+  private InterfaceJoueurHumain monInterfaceHumain;
   private Joueur joueurEsku;
   private Joueur joueurZaku;
   private Opposants opposants;

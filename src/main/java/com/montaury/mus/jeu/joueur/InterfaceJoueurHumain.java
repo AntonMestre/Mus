@@ -28,45 +28,10 @@ public class InterfaceJoueurHumain implements InterfaceJoueur {
 
   @Override
   public List<Carte> cartesAJeter() {
-    String[] saisieUtilisateur;
-    int caseCourante = 0;
-    boolean saisieCorrecte = true;
-
     println("Veuillez saisir les cartes à jeter (ex: 1,3) :");
     String aJeter = scanner.next();
 
-    /*
-     * /!\ Hop Hop Hop Antonin, ça marche avec ce code il y aura juste à gérer le cas ou on met juste une "," (jsp pk ça marche pas) mais à part ça c'est ok
-     */
-
-    while (true) {
-      saisieUtilisateur = aJeter.split(",");
-        saisieCorrecte = true;
-
-      if (saisieUtilisateur.length > 4) {
-        saisieCorrecte = false;
-        println("Attention ! Vous avez inséré trop de cartes. Maximum = 4");
-      }
-
-      for (int i = 0; i < saisieUtilisateur.length; i++) {
-        try {
-          caseCourante = Integer.parseInt(saisieUtilisateur[i]);
-
-        } catch (final NumberFormatException e) {
-          saisieCorrecte = false;
-          println("Attention ! Votre valeur n°" + (i+1) + " (" + saisieUtilisateur[i] + ") " + " doit être une valeur entière.");
-          break;
-        }
-        if (caseCourante < 1 || caseCourante > 4) {
-          saisieCorrecte = false;
-          println("Attention ! Votre carte n°" + (i+1) + " (" + saisieUtilisateur[i] + ") " + " doit être une valeur comprise entre 1 et 4.");
-        }
-      }
-
-      if (saisieCorrecte) {
-        break;
-      }
-
+    while (!cartesAJeterCorrectes(aJeter)) {
       println("Saisie incorrecte, veuillez ressaisir :");
       aJeter = scanner.next();
     }
@@ -75,6 +40,42 @@ public class InterfaceJoueurHumain implements InterfaceJoueur {
             .mapToInt(Integer::parseInt)
             .mapToObj(indiceCarte -> main.cartesDuPlusGrandAuPlusPetit().get(indiceCarte - 1))
             .collect(Collectors.toList());
+  }
+
+  public boolean cartesAJeterCorrectes(String aJeter) {
+    boolean saisieCorrecte = true;
+    String[] saisieUtilisateur;
+    int caseCourante;
+
+    saisieUtilisateur = aJeter.split(",");
+
+
+    if (saisieUtilisateur.length > 4) {
+      saisieCorrecte = false;
+      println("Attention ! Vous avez inséré trop de cartes. Maximum = 4");
+    }
+
+    if (saisieUtilisateur.length == 0) {
+      saisieCorrecte = false;
+      println("Attention ! Vous êtes obligé de jeter au moins une carte.");
+    }
+
+    for (int i = 0; i < saisieUtilisateur.length; i++) {
+      try {
+        caseCourante = Integer.parseInt(saisieUtilisateur[i]);
+
+      } catch (final NumberFormatException e) {
+        saisieCorrecte = false;
+        println("Attention ! Votre valeur n°" + (i+1) + " (" + saisieUtilisateur[i] + ") " + " doit être une valeur entière.");
+        break;
+      }
+      if (caseCourante < 1 || caseCourante > 4) {
+        saisieCorrecte = false;
+        println("Attention ! Votre carte n°" + (i+1) + " (" + saisieUtilisateur[i] + ") " + " doit être une valeur comprise entre 1 et 4.");
+      }
+    }
+
+    return saisieCorrecte;
   }
 
   @Override
