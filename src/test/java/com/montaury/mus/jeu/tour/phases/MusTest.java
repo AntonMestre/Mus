@@ -104,7 +104,17 @@ class MusTest {
     assertThat(monInterfaceHumain.cartesAJeterCorrectes(saisieUtilisateur)).isEqualTo(false);
 
   }
-  
+
+  @Test
+  void devrait_renvoyer_faux_si_le_joueur_fait_une_mauvaise_saisie_autre_q_une_virgule() {
+
+    monInterfaceHumain=new InterfaceJoueurHumain();
+
+    String [] saisieUtilisateur = {"-","d","m","40",",20","1,50","60,1"};
+
+    for(int i=0; i < saisieUtilisateur.length ; i++) assertThat(monInterfaceHumain.cartesAJeterCorrectes(saisieUtilisateur[i])).isEqualTo(false);
+
+  }
 
   private Mus mus;
   private InterfaceJoueur interfaceJoueurEsku;

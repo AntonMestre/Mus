@@ -31,7 +31,10 @@ public class InterfaceJoueurHumain implements InterfaceJoueur {
     println("Veuillez saisir les cartes à jeter (ex: 1,3) :");
     String aJeter = scanner.next();
 
+    // Pour chaque saisie, vérification de sa conformité (cartesAJeterCorrectes())
     while (!cartesAJeterCorrectes(aJeter)) {
+
+      // Tant que la saisie n'est pas correcte on demande de resaisir
       println("Saisie incorrecte, veuillez ressaisir :");
       aJeter = scanner.next();
     }
@@ -43,32 +46,40 @@ public class InterfaceJoueurHumain implements InterfaceJoueur {
   }
 
   public boolean cartesAJeterCorrectes(String aJeter) {
+
     boolean saisieCorrecte = true;
     String[] saisieUtilisateur;
     int caseCourante;
 
     saisieUtilisateur = aJeter.split(",");
 
-
+    // Si la longueur de la saisie dépasse 4 chiffres (longueur du tableau du split > 4) : la saisie est incorrecte
     if (saisieUtilisateur.length > 4) {
       saisieCorrecte = false;
       println("Attention ! Vous avez inséré trop de cartes. Maximum = 4");
     }
 
+    // Si la longueur de la saisie est égale à 0 chiffres (longueur du tableau du split = 0) : la saisie est incorrecte
     if (saisieUtilisateur.length == 0) {
       saisieCorrecte = false;
       println("Attention ! Vous êtes obligé de jeter au moins une carte.");
     }
 
+    // Pour chaque chiffres (soit chaque carte dans le jeu) saisie
     for (int i = 0; i < saisieUtilisateur.length; i++) {
+
+      // Tentative de conversion de la saisie en string en int
       try {
         caseCourante = Integer.parseInt(saisieUtilisateur[i]);
-
-      } catch (final NumberFormatException e) {
+      }
+      catch (final NumberFormatException e) {
+        // Si erreur alors, renvoie d'un message d'erreur descriptif
         saisieCorrecte = false;
         println("Attention ! Votre valeur n°" + (i+1) + " (" + saisieUtilisateur[i] + ") " + " doit être une valeur entière.");
         break;
       }
+
+      // Si le chiffre (la carte) n'est pas compris entre 1 et 4 (inclus) alors, renvoie d'un message d'erreur descriptif
       if (caseCourante < 1 || caseCourante > 4) {
         saisieCorrecte = false;
         println("Attention ! Votre carte n°" + (i+1) + " (" + saisieUtilisateur[i] + ") " + " doit être une valeur comprise entre 1 et 4.");
