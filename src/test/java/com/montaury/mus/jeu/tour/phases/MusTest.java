@@ -96,10 +96,15 @@ class MusTest {
 
   @Test
   void devrait_renvoyer_faux_si_le_joueur_ne_saisit_que_des_virgules() {
+
+    monInterfaceHumain=new InterfaceJoueurHumain();
+
     String saisieUtilisateur = ",";
 
     assertThat(monInterfaceHumain.cartesAJeterCorrectes(saisieUtilisateur)).isEqualTo(false);
+
   }
+  
 
   private Mus mus;
   private InterfaceJoueur interfaceJoueurEsku;
