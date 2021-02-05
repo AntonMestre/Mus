@@ -8,6 +8,9 @@ import java.util.Scanner;
 
 public class Mus {
   public static void main(String[] args) {
+    // On récupère le choix du mode de jeu
+    int choixModeDeJeu = choixModeJeu();
+
     System.out.print("Entrez votre nom: ");
     String nomJoueur = new Scanner(System.in).next();
     Joueur humain = Joueur.humain(nomJoueur);
@@ -17,4 +20,28 @@ public class Mus {
 
     System.out.println("Le vainqueur de la partie est " + resultat.vainqueur().nom());
   }
+
+  private static int choixModeJeu() {
+    // On affiche le menu
+    System.out.println("Choisissez votre mode de jeu :");
+    System.out.println("\t1 - 1c1 Adversaire IA");
+    System.out.println("\t2 - 2v2 Adversaire et Equipier IA");
+    String choixModeDeJeu;
+
+    while (true) {
+      // On récupère le choix du joueur
+      choixModeDeJeu = new Scanner(System.in).next();
+
+      // Si le joueur n'a pas saisit 1 ou 2
+      if (!choixModeDeJeu.equals("1") && !choixModeDeJeu.equals("2")) {
+        System.out.println("Saisie incorrecte, choisissez entre '1' et '2'");
+      }
+      // Sinon on sort de la boucle
+      else {
+        break;
+      }
+    }
+    return Integer.parseInt(choixModeDeJeu);
+  }
 }
+
