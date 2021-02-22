@@ -22,7 +22,7 @@ public class Partie {
     Optional<Joueur> vainqueur;
     do {
       Manche.Resultat resultat = new Manche(affichage).jouer(opposants);
-      vainqueur = score.enregistrer(resultat);
+      vainqueur = score.enregistrer(resultat,opposants);
       affichage.mancheTerminee(score);
     } while (vainqueur.isEmpty());
     return new Resultat(vainqueur.get(), score);
@@ -37,21 +37,40 @@ public class Partie {
     public Score(Opposants opposants) {
       this.manchesGagneesParJoueur.put(opposants.joueurEsku(), 0);
       this.manchesGagneesParJoueur.put(opposants.joueurZaku(), 0);
+
+      if(opposants.isJeuEnEquipe()) {
+        this.manchesGagneesParJoueur.put(opposants.joueurPriorite2(), 0);
+        this.manchesGagneesParJoueur.put(opposants.joueurPriorite3(), 0);
+      }
     }
 
-    public Optional<Joueur> enregistrer(Manche.Resultat score) {
+    public Optional<Joueur> enregistrer(Manche.Resultat score,Opposants opposants) {
       resultatManches.add(score);
       manchesGagneesParJoueur.put(score.vainqueur(), manchesGagneesParJoueur.get(score.vainqueur()) + 1);
-      return vainqueur();
+      return vainqueur(opposants);
     }
 
     public List<Manche.Resultat> resultatManches() {
       return resultatManches;
     }
 
-    public Optional<Joueur> vainqueur() {
-      return manchesGagneesParJoueur.keySet().stream()
-        .filter(joueur -> manchesGagneesParJoueur.get(joueur) == NB_MANCHES_A_GAGNER).findAny();
+    public Optional<Joueur> vainqueur(Opposants opposants) {
+
+      if(opposants.isJeuEnEquipe()){
+          int scoreEquipeEsku = manchesGagneesParJoueur.get(opposants.joueurEsku()) + manchesGagneesParJoueur.get(opposants.joueurPriorite2());
+          int scoreEquipeZaku = manchesGagneesParJoueur.get(opposants.joueurZaku()) + manchesGagneesParJoueur.get(opposants.joueurPriorite3());
+
+          if(scoreEquipeEsku == NB_MANCHES_A_GAGNER){
+            return Optional.ofNullable(opposants.joueurEsku());
+          }else if (scoreEquipeZaku == NB_MANCHES_A_GAGNER ) {
+            return Optional.ofNullable(opposants.joueurZaku());
+          }
+
+      }else {
+        return manchesGagneesParJoueur.keySet().stream().filter(joueur -> manchesGagneesParJoueur.get(joueur) == NB_MANCHES_A_GAGNER).findAny();
+      }
+
+      return null;
     }
   }
 

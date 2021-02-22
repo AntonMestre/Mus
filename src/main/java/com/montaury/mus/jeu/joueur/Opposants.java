@@ -52,7 +52,7 @@ public class Opposants {
   public Joueur joueurZaku() {
     return joueurZaku;
   }
-  public boolean jouentEnEquipe() { return jeuEnEquipe; }
+  public boolean isJeuEnEquipe() { return jeuEnEquipe; }
 
   public Iterator<Joueur> itererDansLOrdre() {
     return new IteratorInfini(this);

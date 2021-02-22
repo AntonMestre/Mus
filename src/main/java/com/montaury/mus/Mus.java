@@ -17,18 +17,21 @@ public class Mus {
     System.out.print("Entrez votre nom: ");
     String nomJoueur = new Scanner(System.in).next();
     Joueur humain = Joueur.humain(nomJoueur);
+    Joueur ordinateur1 = Joueur.ordinateur("ordinateur1");
 
     // Lancement de la partie en fonction du mode de jeu
     if (choixModeDeJeu == 1) {
       Partie partie = new Partie(new AffichageConsoleEvenementsDeJeu(humain));
-      Partie.Resultat resultat = partie.jouer(new Opposants(humain, Joueur.ordinateur()));
+      Partie.Resultat resultat = partie.jouer(new Opposants(humain, ordinateur1));
 
       System.out.println("Le vainqueur de la partie est " + resultat.vainqueur().nom());
     }
 
     if (choixModeDeJeu == 2) {
+      Joueur ordinateur2 = Joueur.ordinateur("ordinateur2");
+      Joueur ordinateur3 = Joueur.ordinateur("ordinateur3");
       Partie partie = new Partie(new AffichageConsoleEvenementsDeJeu(humain));
-      Partie.Resultat resultat = partie.jouer(new Opposants(humain, Joueur.ordinateur()));
+      Partie.Resultat resultat = partie.jouer(new Opposants(humain, ordinateur1,ordinateur2,ordinateur3));
 
       System.out.println("Le vainqueur de la partie est " + resultat.vainqueur().nom());
     }
