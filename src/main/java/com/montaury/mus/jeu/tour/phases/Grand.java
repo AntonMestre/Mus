@@ -46,16 +46,15 @@ public class Grand extends Phase {
         ValeurCarte.Comparaison comparePrio2Zaku = cartesJoueurEsku.get(i).comparerAvec(cartesJoueurZaku.get(i));
         ValeurCarte.Comparaison comparePrio2Prio3 = cartesJoueurEsku.get(i).comparerAvec(cartesjoueurPriorite3.get(i));
 
-        if(compareEskuZaku == PLUS_GRANDE && compareEskuPrio2 == PLUS_GRANDE & compareEskuPrio3 == PLUS_GRANDE){
+        if(compareEskuZaku == PLUS_GRANDE && compareEskuPrio2 == PLUS_GRANDE && compareEskuPrio3 == PLUS_GRANDE){
           return joueurEsku;
-        }else if (compareZakuEsku == PLUS_GRANDE && compareZakuPrio2 == PLUS_GRANDE & compareZakuPrio3 == PLUS_GRANDE){
+        }else if (compareZakuEsku == PLUS_GRANDE && compareZakuPrio2 == PLUS_GRANDE && compareZakuPrio3 == PLUS_GRANDE){
           return joueurZaku;
-        }else if (comparePrio2Esku == PLUS_GRANDE && comparePrio2Zaku == PLUS_GRANDE & comparePrio2Prio3 == PLUS_GRANDE){
+        }else if (comparePrio2Esku == PLUS_GRANDE && comparePrio2Zaku == PLUS_GRANDE && comparePrio2Prio3 == PLUS_GRANDE){
           return joueurPriorite2;
         }else{
           return joueurPriorite3;
         }
-
       }
 
     }else {

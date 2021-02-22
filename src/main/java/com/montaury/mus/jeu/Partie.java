@@ -36,12 +36,11 @@ public class Partie {
 
     public Score(Opposants opposants) {
       this.manchesGagneesParJoueur.put(opposants.joueurEsku(), 0);
-      this.manchesGagneesParJoueur.put(opposants.joueurZaku(), 0);
-
       if(opposants.isJeuEnEquipe()) {
         this.manchesGagneesParJoueur.put(opposants.joueurPriorite2(), 0);
         this.manchesGagneesParJoueur.put(opposants.joueurPriorite3(), 0);
       }
+      this.manchesGagneesParJoueur.put(opposants.joueurZaku(), 0);
     }
 
     public Optional<Joueur> enregistrer(Manche.Resultat score,Opposants opposants) {
