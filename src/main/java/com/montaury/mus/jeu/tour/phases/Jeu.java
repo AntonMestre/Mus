@@ -23,9 +23,29 @@ public class Jeu extends Phase {
 
   @Override
   protected Joueur meilleurParmi(Opposants opposants) {
-    return rangDuJeu(opposants.joueurEsku()) <= rangDuJeu(opposants.joueurZaku()) ?
-      opposants.joueurEsku() :
-      opposants.joueurZaku();
+
+    if(opposants.isJeuEnEquipe()){
+
+      boolean comparaisonEskuZaku=rangDuJeu(opposants.joueurEsku()) <= rangDuJeu(opposants.joueurZaku()) ?true:false;
+      boolean comparaisonPrio2Prio3=rangDuJeu(opposants.joueurPriorite2()) <= rangDuJeu(opposants.joueurPriorite3()) ?true:false;
+
+      if(comparaisonEskuZaku && comparaisonPrio2Prio3){
+        return rangDuJeu(opposants.joueurEsku()) <= rangDuJeu(opposants.joueurPriorite2()) ?opposants.joueurEsku():opposants.joueurPriorite2();
+      }else if(comparaisonEskuZaku && !comparaisonPrio2Prio3){
+        return rangDuJeu(opposants.joueurEsku()) <= rangDuJeu(opposants.joueurPriorite3()) ?opposants.joueurEsku():opposants.joueurPriorite3();
+      }else if(!comparaisonEskuZaku && comparaisonPrio2Prio3){
+        return rangDuJeu(opposants.joueurZaku()) <= rangDuJeu(opposants.joueurPriorite2()) ?opposants.joueurZaku():opposants.joueurPriorite2();
+      }else if(!comparaisonEskuZaku && !comparaisonPrio2Prio3){
+        return rangDuJeu(opposants.joueurZaku()) <= rangDuJeu(opposants.joueurPriorite3()) ?opposants.joueurZaku():opposants.joueurPriorite3();
+      }
+
+    }else {
+      return rangDuJeu(opposants.joueurEsku()) <= rangDuJeu(opposants.joueurZaku()) ?
+              opposants.joueurEsku() :
+              opposants.joueurZaku();
+    }
+
+    return opposants.joueurEsku();
   }
 
   private int rangDuJeu(Joueur joueur) {
