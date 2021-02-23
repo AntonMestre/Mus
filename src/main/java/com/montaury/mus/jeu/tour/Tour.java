@@ -64,10 +64,20 @@ public class Tour {
 
     public void attribuerPointsRestants(Manche.Score score) {
       Iterator<Phase.Resultat> resultatPhase = resultats.iterator();
-      while (resultatPhase.hasNext() && score.vainqueur().isEmpty()) {
-        Phase.Resultat resultat = resultatPhase.next();
-        resultat.vainqueur().ifPresent(vainqueur ->
-          score.scorer(vainqueur, resultat.pointsEnSuspens + resultat.bonus));
+
+      if (score.isScoreEquipe()) {
+        while (resultatPhase.hasNext() && score.equipeVainqueure().isEmpty()) {
+          Phase.Resultat resultat = resultatPhase.next();
+          resultat.vainqueur().ifPresent(vainqueur ->
+                  score.scorer(vainqueur, resultat.pointsEnSuspens + resultat.bonus));
+        }
+      }
+      else {
+        while (resultatPhase.hasNext() && score.vainqueur().isEmpty()) {
+          Phase.Resultat resultat = resultatPhase.next();
+          resultat.vainqueur().ifPresent(vainqueur ->
+                  score.scorer(vainqueur, resultat.pointsEnSuspens + resultat.bonus));
+        }
       }
     }
   }

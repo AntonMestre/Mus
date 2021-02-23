@@ -20,28 +20,42 @@ public class Partie {
   public Resultat jouer(Opposants opposants) {
     affichage.nouvellePartie();
     Partie.Score score = new Partie.Score(opposants);
-    Optional<Joueur> vainqueur;
-    do {
-      Manche.Resultat resultat = new Manche(affichage).jouer(opposants);
-      vainqueur = score.enregistrer(resultat);
-      affichage.mancheTerminee(score);
-    } while (vainqueur.isEmpty());
-    return new Resultat(vainqueur.get(), score);
+
+    if (opposants.isJeuEnEquipe()) {
+      Optional<Equipe> equipeVainqueure;
+      do {
+        Manche.Resultat resultat = new Manche(affichage).jouer(opposants);
+        equipeVainqueure = score.enregistrerEquipe(resultat);
+        affichage.mancheTerminee(score);
+      } while (equipeVainqueure.isEmpty());
+      return new Resultat(equipeVainqueure.get(), score);
+    }
+    else {
+      Optional<Joueur> vainqueur;
+      do {
+        Manche.Resultat resultat = new Manche(affichage).jouer(opposants);
+        vainqueur = score.enregistrer(resultat);
+        affichage.mancheTerminee(score);
+      } while (vainqueur.isEmpty());
+      return new Resultat(vainqueur.get(), score);
+    }
   }
 
   public static class Score {
     private static final int NB_MANCHES_A_GAGNER = 3;
 
     private final List<Manche.Resultat> resultatManches = new ArrayList<>();
-    private Map<Joueur, Integer> manchesGagneesParJoueur = new HashMap<>();
-    private Map<Equipe, Integer> manchesGagneesParEquipe = new HashMap<>();
+    private Map<Joueur, Integer> manchesGagneesParJoueur;
+    private Map<Equipe, Integer> manchesGagneesParEquipe;
 
     public Score(Opposants opposants) {
       if (opposants.isJeuEnEquipe()) {
+        manchesGagneesParEquipe = new HashMap<>();
         this.manchesGagneesParEquipe.put(opposants.joueurEsku().getEquipe(), 0);
         this.manchesGagneesParEquipe.put(opposants.joueurZaku().getEquipe(), 0);
       }
       else {
+        manchesGagneesParJoueur = new HashMap<>();
         this.manchesGagneesParJoueur.put(opposants.joueurEsku(), 0);
         this.manchesGagneesParJoueur.put(opposants.joueurZaku(), 0);
       }

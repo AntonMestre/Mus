@@ -19,12 +19,23 @@ public class Manche {
   public Resultat jouer(Opposants opposants) {
     affichage.nouvelleManche();
     Score score = new Score(opposants);
-    do {
-      new Tour(affichage).jouer(opposants, score);
-      affichage.tourTermine(opposants, score);
-      opposants.tourner();
-    } while (score.vainqueur().isEmpty());
-    return new Resultat(score.vainqueur().get(), score.pointsVaincu().get());
+
+    if (opposants.isJeuEnEquipe()) {
+      do {
+        new Tour(affichage).jouer(opposants, score);
+        affichage.tourTermine(opposants, score);
+        opposants.tourner();
+      } while (score.equipeVainqueure().isEmpty());
+      return new Resultat(score.equipeVainqueure().get(), score.pointsEquipeVaincue().get());
+    }
+    else {
+      do {
+        new Tour(affichage).jouer(opposants, score);
+        affichage.tourTermine(opposants, score);
+        opposants.tourner();
+      } while (score.vainqueur().isEmpty());
+      return new Resultat(score.vainqueur().get(), score.pointsVaincu().get());
+    }
   }
 
   public static class Score {
@@ -33,13 +44,17 @@ public class Manche {
     private Map<Joueur, Integer> scoreParJoueur;
     private Map<Equipe, Integer> scoreParEquipe;
 
+    private boolean isScoreEquipe;
+
     public Score(Opposants opposants) {
       if (opposants.isJeuEnEquipe()) {
+        this.isScoreEquipe = true;
         scoreParEquipe = new HashMap<>();
         scoreParEquipe.put(opposants.joueurEsku().getEquipe(), 0);
         scoreParEquipe.put(opposants.joueurZaku().getEquipe(), 0);
       }
       else {
+        this.isScoreEquipe = false;
         scoreParJoueur = new HashMap<>();
         scoreParJoueur.put(opposants.joueurEsku(), 0);
         scoreParJoueur.put(opposants.joueurZaku(), 0);
@@ -50,6 +65,7 @@ public class Manche {
       return scoreParJoueur;
     }
     public Map<Equipe, Integer> scoreParEquipe() { return scoreParEquipe; }
+    public boolean isScoreEquipe() { return isScoreEquipe; }
 
     public void scorer(Joueur joueur, int points) {
       if (vainqueur().isEmpty()) {
