@@ -26,8 +26,8 @@ public class Jeu extends Phase {
 
     if(opposants.isJeuEnEquipe()){
 
-      boolean comparaisonEskuZaku=rangDuJeu(opposants.joueurEsku()) <= rangDuJeu(opposants.joueurZaku()) ?true:false;
-      boolean comparaisonPrio2Prio3=rangDuJeu(opposants.joueurPriorite2()) <= rangDuJeu(opposants.joueurPriorite3()) ?true:false;
+      boolean comparaisonEskuZaku=rangDuJeu(opposants.joueurEsku()) <= rangDuJeu(opposants.joueurZaku());
+      boolean comparaisonPrio2Prio3=rangDuJeu(opposants.joueurPriorite2()) <= rangDuJeu(opposants.joueurPriorite3());
 
       if(comparaisonEskuZaku && comparaisonPrio2Prio3){
         return rangDuJeu(opposants.joueurEsku()) <= rangDuJeu(opposants.joueurPriorite2()) ?opposants.joueurEsku():opposants.joueurPriorite2();
