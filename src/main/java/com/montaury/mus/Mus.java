@@ -13,7 +13,7 @@ public class Mus {
     // On récupère le choix du mode de jeu
     int choixModeDeJeu = choixModeJeu();
 
-    // On récupère le nom du joueur et on lui crée un objet humain
+    // On récupère le nom du joueur et on lui crée un Joueur humain
     System.out.print("Entrez votre nom: ");
     String nomJoueur = new Scanner(System.in).next();
     Joueur humain = Joueur.humain(nomJoueur);
@@ -30,7 +30,6 @@ public class Mus {
     }
 
     if (choixModeDeJeu == 2) {
-
       // Création d'adversaires supplémentaires customisés
       Joueur ordinateur2 = Joueur.ordinateur("Coequipier");
       Joueur ordinateur3 = Joueur.ordinateur("Adversaire 2");
@@ -40,10 +39,6 @@ public class Mus {
       Partie.Resultat resultat = partie.jouer(new Opposants(humain, ordinateur1,ordinateur2,ordinateur3));
 
       System.out.println("Le vainqueur de la partie est " + resultat.vainqueur().nom());
-    }
-
-    else {
-      System.out.println("WTF");
     }
   }
 

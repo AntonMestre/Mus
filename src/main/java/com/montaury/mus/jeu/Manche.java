@@ -33,12 +33,12 @@ public class Manche {
 
     public Score(Opposants opposants) {
       scoreParJoueur.put(opposants.joueurEsku(), 0);
-      scoreParJoueur.put(opposants.joueurZaku(), 0);
 
       if(opposants.isJeuEnEquipe()) {
         scoreParJoueur.put(opposants.joueurPriorite2(), 0);
         scoreParJoueur.put(opposants.joueurPriorite3(), 0);
       }
+      scoreParJoueur.put(opposants.joueurZaku(), 0);
     }
 
     public Map<Joueur, Integer> scoreParJoueur() {
