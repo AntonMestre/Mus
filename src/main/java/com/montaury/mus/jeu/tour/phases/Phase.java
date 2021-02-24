@@ -2,6 +2,7 @@ package com.montaury.mus.jeu.tour.phases;
 
 import com.montaury.mus.jeu.Manche;
 import com.montaury.mus.jeu.joueur.AffichageEvenementsDeJeu;
+import com.montaury.mus.jeu.joueur.Equipe;
 import com.montaury.mus.jeu.joueur.Joueur;
 import com.montaury.mus.jeu.joueur.Opposants;
 import com.montaury.mus.jeu.tour.phases.dialogue.Dialogue;
@@ -40,18 +41,40 @@ public abstract class Phase {
 
   private Resultat conclure(DialogueTermine dialogue, Manche.Score score, Opposants opposants) {
     if (dialogue.estConcluPar(TIRA)) {
-      Joueur joueurEmportantLaMise = dialogue.avantDernierJoueur();
-      score.scorer(joueurEmportantLaMise, dialogue.pointsEngages());
-      return Resultat.termine(joueurEmportantLaMise, pointsBonus(joueurEmportantLaMise));
+
+      if (opposants.isJeuEnEquipe()) {
+        Equipe equipeEmportantLaMise = dialogue.avantDernierJoueur().getEquipe();
+        score.scorer(equipeEmportantLaMise, dialogue.pointsEngages());
+        return Resultat.termine(equipeEmportantLaMise, pointsBonus(equipeEmportantLaMise));
+      }
+      else {
+        Joueur joueurEmportantLaMise = dialogue.avantDernierJoueur();
+        score.scorer(joueurEmportantLaMise, dialogue.pointsEngages());
+        return Resultat.termine(joueurEmportantLaMise, pointsBonus(joueurEmportantLaMise));
+      }
     }
     if (dialogue.estConcluPar(KANTA)) {
-      Joueur vainqueur = meilleurParmi(opposants);
-      score.remporterManche(vainqueur);
-      return Resultat.termine(vainqueur, 0);
+      if (opposants.isJeuEnEquipe()) {
+        Equipe equipeVainqueure = meilleurParmi(opposants).getEquipe();
+        score.remporterManche(equipeVainqueure);
+        return Resultat.termine(equipeVainqueure, 0);
+      }
+      else {
+        Joueur vainqueur = meilleurParmi(opposants);
+        score.remporterManche(vainqueur);
+        return Resultat.termine(vainqueur, 0);
+      }
     }
-    Joueur vainqueurPhase = meilleurParmi(opposants);
-    int bonus = pointsBonus(vainqueurPhase);
-    return Resultat.suspendu(vainqueurPhase, dialogue.estConcluPar(PASO) && bonus != 0 ? 0 : dialogue.pointsEngages(), bonus);
+    if (opposants.isJeuEnEquipe()) {
+      Equipe equipeVainqueurePhase = meilleurParmi(opposants).getEquipe();
+      int bonus = pointsBonus(equipeVainqueurePhase);
+      return Resultat.suspendu(equipeVainqueurePhase, dialogue.estConcluPar(PASO) && bonus != 0 ? 0 : dialogue.pointsEngages(), bonus);
+    }
+    else {
+      Joueur vainqueurPhase = meilleurParmi(opposants);
+      int bonus = pointsBonus(vainqueurPhase);
+      return Resultat.suspendu(vainqueurPhase, dialogue.estConcluPar(PASO) && bonus != 0 ? 0 : dialogue.pointsEngages(), bonus);
+    }
   }
 
   public List<Joueur> participantsParmi(Opposants opposants) {
@@ -61,7 +84,12 @@ public abstract class Phase {
   }
 
   public final boolean peutSeDerouler(Opposants opposants) {
-    return peutParticiper(opposants.joueurEsku()) && peutParticiper(opposants.joueurZaku());
+    if (opposants.isJeuEnEquipe()) {
+      return (peutParticiper(opposants.joueurEsku()) || peutParticiper(opposants.joueurPriorite3())) && (peutParticiper(opposants.joueurPriorite2()) || peutParticiper(opposants.joueurZaku()));
+    }
+    else {
+      return peutParticiper(opposants.joueurEsku()) && peutParticiper(opposants.joueurZaku());
+    }
   }
 
   protected boolean peutParticiper(Joueur joueur) {
@@ -73,21 +101,34 @@ public abstract class Phase {
   protected int pointsBonus(Joueur vainqueur) {
     return 0;
   }
+  protected int pointsBonus(Equipe equipeVainqueure) { return 0; }
 
   public static class Resultat {
     public static Resultat nonJouable() {
-      return new Resultat(null, 0, 0);
+      // A VERIFIER !!
+      Joueur joueurNull = null;
+      return new Resultat(joueurNull, 0, 0);
+    }
+    public static Resultat nonJouableEquipe() {
+      // A VERIFIER !!
+      Equipe equipeNull = null;
+      return new Resultat(equipeNull, 0, 0);
     }
 
     public static Resultat termine(Joueur vainqueur, int bonusDeFin) {
       return new Resultat(vainqueur, 0, bonusDeFin);
     }
+    public static Resultat termine(Equipe equipeVainqueure, int bonusDeFin) { return new Resultat(equipeVainqueure, 0, bonusDeFin); }
 
     public static Resultat suspendu(Joueur vainqueur, int pointsEnSuspens, int bonusDeFin) {
       return new Resultat(vainqueur, pointsEnSuspens, bonusDeFin);
     }
+    public static Resultat suspendu(Equipe equipeVainqueure, int pointsEnSuspens, int bonusDeFin) {
+      return new Resultat(equipeVainqueure, pointsEnSuspens, bonusDeFin);
+    }
 
-    private final Joueur vainqueur;
+    private Joueur vainqueur;
+    private Equipe equipeVainqueure;
     public final int pointsEnSuspens;
     public final int bonus;
 
@@ -97,9 +138,16 @@ public abstract class Phase {
       this.bonus = bonus;
     }
 
+    private Resultat(Equipe equipeVainqueure, int pointsEnSuspens, int bonus) {
+      this.pointsEnSuspens = pointsEnSuspens;
+      this.equipeVainqueure = equipeVainqueure;
+      this.bonus = bonus;
+    }
+
     public Optional<Joueur> vainqueur() {
       return Optional.ofNullable(vainqueur);
     }
+    public Optional<Equipe> equipeVainqueure() { return Optional.ofNullable(equipeVainqueure); }
 
     public int points() {
       return pointsEnSuspens + bonus;
