@@ -91,15 +91,15 @@ public class Opposants {
           suivant = opposants.joueurPriorite2;
         }
 
-        if (suivant == opposants.joueurPriorite2) {
+        else if (suivant == opposants.joueurPriorite2) {
           suivant = opposants.joueurPriorite3;
         }
 
-        if (suivant == opposants.joueurPriorite3) {
+        else if (suivant == opposants.joueurPriorite3) {
           suivant = opposants.joueurZaku;
         }
 
-        if (suivant == opposants.joueurZaku) {
+        else if (suivant == opposants.joueurZaku) {
           suivant = opposants.joueurEsku;
         }
       }
