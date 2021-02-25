@@ -84,7 +84,13 @@ public class AffichageConsoleEvenementsDeJeu implements AffichageEvenementsDeJeu
   @Override
   public void partieTerminee(Partie.Resultat resultat) {
     println("La partie est terminée !");
-    println("Vainqueur: " + resultat.vainqueur());
+
+    if (resultat.estUnResultatDEquipe()) {
+      println("Vainqueur: " + resultat.equipeVainqueure());
+    }
+    else {
+      println("Vainqueur: " + resultat.vainqueur());
+    }
   }
 
   private void println(String string) {

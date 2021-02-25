@@ -99,20 +99,27 @@ public class Partie {
     private Equipe equipeVainqueure;
     private Score score;
 
+    private boolean estUnResultatDEquipe;
+
     private Resultat(Joueur vainqueur, Score score) {
       this.vainqueur = vainqueur;
       this.score = score;
+
+      this.estUnResultatDEquipe = false;
     }
 
     private Resultat(Equipe vainqueurs, Score score) {
       this.equipeVainqueure = vainqueurs;
       this.score = score;
+
+      this.estUnResultatDEquipe = true;
     }
 
     public Joueur vainqueur() {
       return vainqueur;
     }
     public Equipe equipeVainqueure() { return equipeVainqueure; }
+    public boolean estUnResultatDEquipe() { return estUnResultatDEquipe; }
 
     public Score score() {
       return score;
