@@ -18,7 +18,7 @@ public class Paires extends Phase {
     com.montaury.mus.jeu.carte.paires.Paires pairesJoueurEsku = opposants.joueurEsku().main().getPaires();
     com.montaury.mus.jeu.carte.paires.Paires pairesJoueurZaku = opposants.joueurZaku().main().getPaires();
 
-    if (opposants.isJeuEnEquipe()) {
+    if (opposants.jouentEnEquipe()) {
       com.montaury.mus.jeu.carte.paires.Paires pairesJoueurPriorite2 = opposants.joueurPriorite2().main().getPaires();
       com.montaury.mus.jeu.carte.paires.Paires pairesJoueurPriorite3 = opposants.joueurPriorite3().main().getPaires();
 

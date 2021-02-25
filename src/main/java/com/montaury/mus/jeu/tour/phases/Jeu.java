@@ -24,7 +24,7 @@ public class Jeu extends Phase {
   @Override
   protected Joueur meilleurParmi(Opposants opposants) {
 
-    if(opposants.isJeuEnEquipe()){
+    if(opposants.jouentEnEquipe()){
 
       boolean comparaisonEskuZaku=rangDuJeu(opposants.joueurEsku()) <= rangDuJeu(opposants.joueurZaku());
       boolean comparaisonPrio2Prio3=rangDuJeu(opposants.joueurPriorite2()) <= rangDuJeu(opposants.joueurPriorite3());

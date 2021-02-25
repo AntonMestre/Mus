@@ -22,7 +22,7 @@ public class Petit extends Phase {
     List<Carte> cartesJoueurEsku = joueurEsku.main().cartesDuPlusGrandAuPlusPetit();
     List<Carte> cartesJoueurZaku = joueurZaku.main().cartesDuPlusGrandAuPlusPetit();
 
-    if (opposants.isJeuEnEquipe()) {
+    if (opposants.jouentEnEquipe()) {
       Joueur joueurPriorite2 = opposants.joueurPriorite2();
       Joueur joueurPriorite3 = opposants.joueurPriorite3();
       List<Carte> cartesJoueurPriorite2 = joueurPriorite2.main().cartesDuPlusGrandAuPlusPetit();

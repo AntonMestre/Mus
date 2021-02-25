@@ -42,7 +42,7 @@ public abstract class Phase {
   private Resultat conclure(DialogueTermine dialogue, Manche.Score score, Opposants opposants) {
     if (dialogue.estConcluPar(TIRA)) {
 
-      if (opposants.isJeuEnEquipe()) {
+      if (opposants.jouentEnEquipe()) {
         Equipe equipeEmportantLaMise = dialogue.avantDernierJoueur().getEquipe();
         score.scorer(equipeEmportantLaMise, dialogue.pointsEngages());
         return Resultat.termine(equipeEmportantLaMise, pointsBonus(equipeEmportantLaMise));
@@ -54,7 +54,7 @@ public abstract class Phase {
       }
     }
     if (dialogue.estConcluPar(KANTA)) {
-      if (opposants.isJeuEnEquipe()) {
+      if (opposants.jouentEnEquipe()) {
         Equipe equipeVainqueure = meilleurParmi(opposants).getEquipe();
         score.remporterManche(equipeVainqueure);
         return Resultat.termine(equipeVainqueure, 0);
@@ -65,7 +65,7 @@ public abstract class Phase {
         return Resultat.termine(vainqueur, 0);
       }
     }
-    if (opposants.isJeuEnEquipe()) {
+    if (opposants.jouentEnEquipe()) {
       Equipe equipeVainqueurePhase = meilleurParmi(opposants).getEquipe();
       int bonus = pointsBonus(equipeVainqueurePhase);
       return Resultat.suspendu(equipeVainqueurePhase, dialogue.estConcluPar(PASO) && bonus != 0 ? 0 : dialogue.pointsEngages(), bonus);
@@ -84,7 +84,7 @@ public abstract class Phase {
   }
 
   public final boolean peutSeDerouler(Opposants opposants) {
-    if (opposants.isJeuEnEquipe()) {
+    if (opposants.jouentEnEquipe()) {
       return (peutParticiper(opposants.joueurEsku()) || peutParticiper(opposants.joueurPriorite3())) && (peutParticiper(opposants.joueurPriorite2()) || peutParticiper(opposants.joueurZaku()));
     }
     else {

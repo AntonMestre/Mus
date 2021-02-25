@@ -9,13 +9,13 @@ public class Opposants {
   private Joueur joueurPriorite3;
   private Joueur joueurZaku;
 
-  private boolean jeuEnEquipe;
+  private boolean jouentEnEquipe;
 
   public Opposants(Joueur joueurEsku, Joueur joueurZaku) {
     this.joueurEsku = joueurEsku;
     this.joueurZaku = joueurZaku;
 
-    this.jeuEnEquipe = false;
+    this.jouentEnEquipe = false;
   }
 
   public Opposants(Joueur joueurEsku, Joueur joueurPriorite2, Joueur joueurPriorite3, Joueur joueurZaku) {
@@ -24,11 +24,11 @@ public class Opposants {
     this.joueurPriorite3 = joueurPriorite3;
     this.joueurZaku = joueurZaku;
 
-    this.jeuEnEquipe = true;
+    this.jouentEnEquipe = true;
   }
 
   public void tourner() {
-    if (jeuEnEquipe) {
+    if (jouentEnEquipe) {
       Joueur tmp = joueurEsku;
       joueurEsku = joueurPriorite2;
       joueurPriorite2 = joueurPriorite3;
@@ -52,14 +52,14 @@ public class Opposants {
   public Joueur joueurZaku() {
     return joueurZaku;
   }
-  public boolean isJeuEnEquipe() { return jeuEnEquipe; }
+  public boolean jouentEnEquipe() { return jouentEnEquipe; }
 
   public Iterator<Joueur> itererDansLOrdre() {
     return new IteratorInfini(this);
   }
 
   public List<Joueur> dansLOrdre() {
-    if (jeuEnEquipe) {
+    if (jouentEnEquipe) {
       return List.of(joueurEsku, joueurPriorite2, joueurPriorite3, joueurZaku);
     }
 
@@ -86,7 +86,7 @@ public class Opposants {
     public Joueur next() {
       Joueur next = suivant;
 
-      if (opposants.jeuEnEquipe) {
+      if (opposants.jouentEnEquipe) {
         if (suivant == opposants.joueurEsku) {
           suivant = opposants.joueurPriorite2;
         }

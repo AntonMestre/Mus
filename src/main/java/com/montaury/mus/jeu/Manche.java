@@ -20,7 +20,7 @@ public class Manche {
     affichage.nouvelleManche();
     Score score = new Score(opposants);
 
-    if (opposants.isJeuEnEquipe()) {
+    if (opposants.jouentEnEquipe()) {
       do {
         new Tour(affichage).jouer(opposants, score);
         affichage.tourTermine(opposants, score);
@@ -47,7 +47,7 @@ public class Manche {
     private boolean isScoreEquipe;
 
     public Score(Opposants opposants) {
-      if (opposants.isJeuEnEquipe()) {
+      if (opposants.jouentEnEquipe()) {
         this.isScoreEquipe = true;
         scoreParEquipe = new HashMap<>();
         scoreParEquipe.put(opposants.joueurEsku().getEquipe(), 0);

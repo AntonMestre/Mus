@@ -21,7 +21,7 @@ public class FauxJeu extends Phase {
     int pointsJoueurEsku = opposants.joueurEsku().main().pointsPourJeu();
     int pointsJoueurZaku = opposants.joueurZaku().main().pointsPourJeu();
 
-    if(opposants.isJeuEnEquipe()){
+    if(opposants.jouentEnEquipe()){
       int pointsJoueurPrio2 = opposants.joueurPriorite2().main().pointsPourJeu();
       int pointsJoueurPrio3 = opposants.joueurPriorite3().main().pointsPourJeu();
 

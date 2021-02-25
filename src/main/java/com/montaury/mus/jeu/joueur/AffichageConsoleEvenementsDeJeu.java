@@ -27,7 +27,7 @@ public class AffichageConsoleEvenementsDeJeu implements AffichageEvenementsDeJeu
   public void mancheTerminee(Partie.Score score) {
     println("Manche terminée");
 
-    if (score.isScoreEquipe()) {
+    if (score.estUnScoreDEquipe()) {
       score.resultatManches().forEach(manche -> println("Vainqueur : " + manche.equipeVainqueure().nom() + ", score du perdant : " + manche.pointsVaincu()));
     }
     else {
@@ -45,7 +45,7 @@ public class AffichageConsoleEvenementsDeJeu implements AffichageEvenementsDeJeu
     println("Tour terminé");
     opposants.dansLOrdre().forEach(this::afficherMain);
 
-    if (opposants.isJeuEnEquipe()) {
+    if (opposants.jouentEnEquipe()) {
       score.scoreParEquipe().forEach((key, value) -> println("Score " + key.nom() + ": " + value));
     }
     else {
