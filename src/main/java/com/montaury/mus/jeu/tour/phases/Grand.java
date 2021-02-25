@@ -17,60 +17,37 @@ public class Grand extends Phase {
 
   @Override
   protected Joueur meilleurParmi(Opposants opposants) {
-
     Joueur joueurEsku = opposants.joueurEsku();
     Joueur joueurZaku = opposants.joueurZaku();
 
-    List<Carte> cartesJoueurEsku = joueurEsku.main().cartesDuPlusGrandAuPlusPetit();
-    List<Carte> cartesJoueurZaku = joueurZaku.main().cartesDuPlusGrandAuPlusPetit();
-
     if(opposants.jouentEnEquipe()) {
-
       Joueur joueurPriorite2 = opposants.joueurPriorite2();
       Joueur joueurPriorite3 = opposants.joueurPriorite3();
 
-      List<Carte> cartesjoueurPriorite2 = joueurPriorite2.main().cartesDuPlusGrandAuPlusPetit();
-      List<Carte> cartesjoueurPriorite3 = joueurPriorite3.main().cartesDuPlusGrandAuPlusPetit();
+      Joueur meilleurJoueurEquipe1 = comparerDeuxJoueurs(joueurEsku, joueurPriorite3);
+      Joueur meilleurJoueurEquipe2 = comparerDeuxJoueurs(joueurPriorite2, joueurZaku);
 
-      for (int i = 0; i < Main.TAILLE; i++) {
-
-        ValeurCarte.Comparaison compareEskuZaku = cartesJoueurEsku.get(i).comparerAvec(cartesJoueurZaku.get(i));
-        ValeurCarte.Comparaison compareEskuPrio2 = cartesJoueurEsku.get(i).comparerAvec(cartesjoueurPriorite2.get(i));
-        ValeurCarte.Comparaison compareEskuPrio3 = cartesJoueurEsku.get(i).comparerAvec(cartesjoueurPriorite3.get(i));
-
-        ValeurCarte.Comparaison compareZakuEsku = cartesJoueurZaku.get(i).comparerAvec(cartesJoueurEsku.get(i));
-        ValeurCarte.Comparaison compareZakuPrio2 = cartesJoueurZaku.get(i).comparerAvec(cartesjoueurPriorite2.get(i));
-        ValeurCarte.Comparaison compareZakuPrio3 = cartesJoueurZaku.get(i).comparerAvec(cartesjoueurPriorite3.get(i));
-
-        ValeurCarte.Comparaison comparePrio2Esku = cartesJoueurEsku.get(i).comparerAvec(cartesJoueurEsku.get(i));
-        ValeurCarte.Comparaison comparePrio2Zaku = cartesJoueurEsku.get(i).comparerAvec(cartesJoueurZaku.get(i));
-        ValeurCarte.Comparaison comparePrio2Prio3 = cartesJoueurEsku.get(i).comparerAvec(cartesjoueurPriorite3.get(i));
-
-        if(compareEskuZaku == PLUS_GRANDE && compareEskuPrio2 == PLUS_GRANDE && compareEskuPrio3 == PLUS_GRANDE){
-          return joueurEsku;
-        }else if (compareZakuEsku == PLUS_GRANDE && compareZakuPrio2 == PLUS_GRANDE && compareZakuPrio3 == PLUS_GRANDE){
-          return joueurZaku;
-        }else if (comparePrio2Esku == PLUS_GRANDE && comparePrio2Zaku == PLUS_GRANDE && comparePrio2Prio3 == PLUS_GRANDE){
-          return joueurPriorite2;
-        }else{
-          return joueurPriorite3;
-        }
-      }
-
-    }else {
-
-      for (int i = 0; i < Main.TAILLE; i++) {
-        ValeurCarte.Comparaison compare = cartesJoueurEsku.get(i).comparerAvec(cartesJoueurZaku.get(i));
-        if (compare == PLUS_GRANDE) {
-          return joueurEsku;
-        }
-        if (compare == PLUS_PETITE) {
-          return joueurZaku;
-        }
-      }
-
+      return comparerDeuxJoueurs(meilleurJoueurEquipe1, meilleurJoueurEquipe2);
     }
+    else {
+      return comparerDeuxJoueurs(joueurEsku, joueurZaku);
+    }
+  }
 
-    return joueurEsku;
+  protected Joueur comparerDeuxJoueurs(Joueur joueur1, Joueur joueur2) {
+    List<Carte> cartesJoueur1 = joueur1.main().cartesDuPlusGrandAuPlusPetit();
+    List<Carte> cartesJoueur2 = joueur2.main().cartesDuPlusGrandAuPlusPetit();
+
+    for (int i = 0; i < Main.TAILLE; i++) {
+      ValeurCarte.Comparaison compare = cartesJoueur1.get(i).comparerAvec(cartesJoueur2.get(i));
+      if (compare == PLUS_GRANDE) {
+        return joueur1;
+      }
+      if (compare == PLUS_PETITE) {
+        return joueur2;
+      }
+    }
+    // Si il y a égalité, on considère que le 1er joueur passé en paramètre est prioritaire
+    return joueur1;
   }
 }
