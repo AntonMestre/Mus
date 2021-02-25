@@ -40,11 +40,21 @@ public class Tour {
 
     ResultatsPhases resultats = new ResultatsPhases();
     Iterator<Phase> phases = phasesJouablesPar(opposants).iterator();
-    do {
-      Phase.Resultat resultat = phases.next().jouer(affichage, opposants, score);
-      resultats.ajouter(resultat);
-    } while (phases.hasNext() && score.vainqueur().isEmpty());
-    resultats.attribuerPointsRestants(score);
+
+    if (opposants.isJeuEnEquipe()) {
+      do {
+        Phase.Resultat resultat = phases.next().jouer(affichage, opposants, score);
+        resultats.ajouter(resultat);
+      } while (phases.hasNext() && score.equipeVainqueure().isEmpty());
+      resultats.attribuerPointsRestants(score);
+    }
+    else {
+      do {
+        Phase.Resultat resultat = phases.next().jouer(affichage, opposants, score);
+        resultats.ajouter(resultat);
+      } while (phases.hasNext() && score.vainqueur().isEmpty());
+      resultats.attribuerPointsRestants(score);
+    }
   }
 
   private static Iterable<Phase> phasesJouablesPar(Opposants opposants) {

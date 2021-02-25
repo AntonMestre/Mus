@@ -48,16 +48,22 @@ public class Partie {
     private Map<Joueur, Integer> manchesGagneesParJoueur;
     private Map<Equipe, Integer> manchesGagneesParEquipe;
 
+    private boolean isScoreEquipe;
+
     public Score(Opposants opposants) {
       if (opposants.isJeuEnEquipe()) {
         manchesGagneesParEquipe = new HashMap<>();
         this.manchesGagneesParEquipe.put(opposants.joueurEsku().getEquipe(), 0);
         this.manchesGagneesParEquipe.put(opposants.joueurZaku().getEquipe(), 0);
+
+        isScoreEquipe = true;
       }
       else {
         manchesGagneesParJoueur = new HashMap<>();
         this.manchesGagneesParJoueur.put(opposants.joueurEsku(), 0);
         this.manchesGagneesParJoueur.put(opposants.joueurZaku(), 0);
+
+        isScoreEquipe = false;
       }
     }
 
@@ -69,13 +75,15 @@ public class Partie {
 
     public Optional<Equipe> enregistrerEquipe(Manche.Resultat score) {
       resultatManches.add(score);
-      manchesGagneesParEquipe.put(score.equipeVainqueure(), manchesGagneesParJoueur.get(score.vainqueur()) + 1);
+      manchesGagneesParEquipe.put(score.equipeVainqueure(), manchesGagneesParEquipe.get(score.equipeVainqueure()) + 1);
       return equipeVainqueure();
     }
 
     public List<Manche.Resultat> resultatManches() {
       return resultatManches;
     }
+
+    public boolean isScoreEquipe() { return isScoreEquipe; }
 
     public Optional<Joueur> vainqueur() {
       return manchesGagneesParJoueur.keySet().stream().filter(joueur -> manchesGagneesParJoueur.get(joueur) == NB_MANCHES_A_GAGNER).findAny();

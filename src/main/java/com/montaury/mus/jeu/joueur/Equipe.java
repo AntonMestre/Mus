@@ -18,4 +18,5 @@ public class Equipe {
     public Joueur getCoequipier(Joueur joueur) {
         return joueur == this.joueur1 ? joueur2 : joueur1;
     }
+    public String nom() { return this.nom; }
 }

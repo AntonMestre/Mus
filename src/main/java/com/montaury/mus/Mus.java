@@ -36,7 +36,7 @@ public class Mus {
       Joueur ordinateur3 = Joueur.ordinateur("Adversaire 2");
 
       // On demande au joueur le nom de l'équipe souhaitée
-      System.out.print("Choisissez unn nom pour votre equipe : ");
+      System.out.print("Choisissez un nom pour votre equipe : ");
       String nomEquipeJoueur = new Scanner(System.in).next();
 
       // Inscription des équipes
@@ -54,7 +54,7 @@ public class Mus {
   private static int choixModeJeu() {
     // On affiche le menu
     System.out.println("Choisissez votre mode de jeu :");
-    System.out.println("\t1 - 1c1 Adversaire IA");
+    System.out.println("\t1 - 1v1 Adversaire IA");
     System.out.println("\t2 - 2v2 Adversaire et Equipier IA");
     String choixModeDeJeu;
 
