@@ -9,39 +9,19 @@ public class Opposants {
   private Joueur joueurPriorite3;
   private Joueur joueurZaku;
 
-  private boolean jouentEnEquipe;
-
-  public Opposants(Joueur joueurEsku, Joueur joueurZaku) {
-    this.joueurEsku = joueurEsku;
-    this.joueurZaku = joueurZaku;
-
-    this.jouentEnEquipe = false;
-  }
-
   public Opposants(Joueur joueurEsku, Joueur joueurPriorite2, Joueur joueurPriorite3, Joueur joueurZaku) {
     this.joueurEsku = joueurEsku;
     this.joueurPriorite2 = joueurPriorite2;
     this.joueurPriorite3 = joueurPriorite3;
     this.joueurZaku = joueurZaku;
-
-    this.jouentEnEquipe = true;
   }
 
   public void tourner() {
-    if (jouentEnEquipe) {
       Joueur tmp = joueurEsku;
       joueurEsku = joueurPriorite2;
       joueurPriorite2 = joueurPriorite3;
       joueurPriorite3 = joueurZaku;
       joueurZaku = tmp;
-    }
-
-    else {
-      Joueur tmp = joueurEsku;
-      joueurEsku = joueurZaku;
-      joueurZaku = tmp;
-    }
-
   }
 
   public Joueur joueurEsku() {
@@ -52,20 +32,13 @@ public class Opposants {
   public Joueur joueurZaku() {
     return joueurZaku;
   }
-  public boolean jouentEnEquipe() { return jouentEnEquipe; }
 
   public Iterator<Joueur> itererDansLOrdre() {
     return new IteratorInfini(this);
   }
 
   public List<Joueur> dansLOrdre() {
-    if (jouentEnEquipe) {
       return List.of(joueurEsku, joueurPriorite2, joueurPriorite3, joueurZaku);
-    }
-
-    else {
-      return List.of(joueurEsku, joueurZaku);
-    }
   }
 
   private static class IteratorInfini implements Iterator<Joueur> {
@@ -85,29 +58,18 @@ public class Opposants {
     @Override
     public Joueur next() {
       Joueur next = suivant;
-
-      if (opposants.jouentEnEquipe) {
-        if (suivant == opposants.joueurEsku) {
-          suivant = opposants.joueurPriorite2;
-        }
-
-        else if (suivant == opposants.joueurPriorite2) {
-          suivant = opposants.joueurPriorite3;
-        }
-
-        else if (suivant == opposants.joueurPriorite3) {
-          suivant = opposants.joueurZaku;
-        }
-
-        else if (suivant == opposants.joueurZaku) {
-          suivant = opposants.joueurEsku;
-        }
+      if (suivant == opposants.joueurEsku) {
+        suivant = opposants.joueurPriorite2;
       }
-
-      else {
-        suivant = suivant == opposants.joueurEsku ? opposants.joueurZaku : opposants.joueurEsku;
+      else if (suivant == opposants.joueurPriorite2) {
+        suivant = opposants.joueurPriorite3;
       }
-
+      else if (suivant == opposants.joueurPriorite3) {
+        suivant = opposants.joueurZaku;
+      }
+      else if (suivant == opposants.joueurZaku) {
+        suivant = opposants.joueurEsku;
+      }
       return next;
     }
   }

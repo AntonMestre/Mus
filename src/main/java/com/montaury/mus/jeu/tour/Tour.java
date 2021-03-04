@@ -37,24 +37,13 @@ public class Tour {
   public void jouer(Opposants opposants, Manche.Score score) {
     affichage.nouveauTour(opposants);
     new Mus(paquet, defausse, affichage).jouer(opposants);
-
     ResultatsPhases resultats = new ResultatsPhases();
     Iterator<Phase> phases = phasesJouablesPar(opposants).iterator();
-
-    if (opposants.jouentEnEquipe()) {
-      do {
-        Phase.Resultat resultat = phases.next().jouer(affichage, opposants, score);
-        resultats.ajouter(resultat);
-      } while (phases.hasNext() && score.equipeVainqueure().isEmpty());
-      resultats.attribuerPointsRestants(score);
-    }
-    else {
-      do {
-        Phase.Resultat resultat = phases.next().jouer(affichage, opposants, score);
-        resultats.ajouter(resultat);
-      } while (phases.hasNext() && score.vainqueur().isEmpty());
-      resultats.attribuerPointsRestants(score);
-    }
+    do {
+      Phase.Resultat resultat = phases.next().jouer(affichage, opposants, score);
+      resultats.ajouter(resultat);
+    } while (phases.hasNext() && score.equipeVainqueure().isEmpty());
+    resultats.attribuerPointsRestants(score);
   }
 
   private static Iterable<Phase> phasesJouablesPar(Opposants opposants) {
@@ -74,20 +63,10 @@ public class Tour {
 
     public void attribuerPointsRestants(Manche.Score score) {
       Iterator<Phase.Resultat> resultatPhase = resultats.iterator();
-
-      if (score.estUnScoreDEquipe()) {
-        while (resultatPhase.hasNext() && score.equipeVainqueure().isEmpty()) {
-          Phase.Resultat resultat = resultatPhase.next();
-          resultat.equipeVainqueure().ifPresent(vainqueur ->
-                  score.scorer(vainqueur, resultat.pointsEnSuspens + resultat.bonus));
-        }
-      }
-      else {
-        while (resultatPhase.hasNext() && score.vainqueur().isEmpty()) {
-          Phase.Resultat resultat = resultatPhase.next();
-          resultat.vainqueur().ifPresent(vainqueur ->
-                  score.scorer(vainqueur, resultat.pointsEnSuspens + resultat.bonus));
-        }
+      while (resultatPhase.hasNext() && score.equipeVainqueure().isEmpty()) {
+        Phase.Resultat resultat = resultatPhase.next();
+        resultat.equipeVainqueure().ifPresent(vainqueur ->
+                score.scorer(vainqueur, resultat.pointsEnSuspens + resultat.bonus));
       }
     }
   }

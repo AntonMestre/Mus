@@ -10,10 +10,6 @@ import java.util.Scanner;
 
 public class Mus {
   public static void main(String[] args) {
-
-    // On récupère le choix du mode de jeu
-    int choixModeDeJeu = choixModeJeu();
-
     // On récupère le nom du joueur et on lui crée un Joueur humain
     System.out.print("Entrez votre nom : ");
     String nomJoueur = new Scanner(System.in).next();
@@ -22,56 +18,23 @@ public class Mus {
     // Création d'un adversaire customisé
     Joueur ordinateur1 = Joueur.ordinateur("Adversaire 1");
 
-    // Lancement de la partie en fonction du mode de jeu
-    if (choixModeDeJeu == 1) {
-      Partie partie = new Partie(new AffichageConsoleEvenementsDeJeu(humain));
-      Partie.Resultat resultat = partie.jouer(new Opposants(humain, ordinateur1));
+    // Création d'adversaires supplémentaires customisés
+    Joueur ordinateur2 = Joueur.ordinateur("Coequipier");
+    Joueur ordinateur3 = Joueur.ordinateur("Adversaire 2");
 
-      System.out.println("Le vainqueur de la partie est " + resultat.vainqueur().nom());
-    }
+    // On demande au joueur le nom de l'équipe souhaitée
+    System.out.print("Choisissez un nom pour votre equipe : ");
+    String nomEquipeJoueur = new Scanner(System.in).next();
 
-    if (choixModeDeJeu == 2) {
-      // Création d'adversaires supplémentaires customisés
-      Joueur ordinateur2 = Joueur.ordinateur("Coequipier");
-      Joueur ordinateur3 = Joueur.ordinateur("Adversaire 2");
-
-      // On demande au joueur le nom de l'équipe souhaitée
-      System.out.print("Choisissez un nom pour votre equipe : ");
-      String nomEquipeJoueur = new Scanner(System.in).next();
-
-      // Inscription des équipes
-      Equipe equipeJoueur = new Equipe(humain, ordinateur2, nomEquipeJoueur);
-      Equipe equipeOrdi = new Equipe(ordinateur1, ordinateur3, "Team IA");
+    // Inscription des équipes
+    Equipe equipeJoueur = new Equipe(humain, ordinateur2, nomEquipeJoueur);
+    Equipe equipeOrdi = new Equipe(ordinateur1, ordinateur3, "Team IA");
 
 
-      Partie partie = new Partie(new AffichageConsoleEvenementsDeJeu(humain));
-      Partie.Resultat resultat = partie.jouer(new Opposants(humain, ordinateur1,ordinateur2,ordinateur3));
+    Partie partie = new Partie(new AffichageConsoleEvenementsDeJeu(humain));
+    Partie.Resultat resultat = partie.jouer(new Opposants(humain, ordinateur1,ordinateur2,ordinateur3));
 
-      System.out.println("Le vainqueur de la partie est " + resultat.equipeVainqueure().nom());
-    }
-  }
-
-  private static int choixModeJeu() {
-    // On affiche le menu
-    System.out.println("Choisissez votre mode de jeu :");
-    System.out.println("\t1 - 1v1 Adversaire IA");
-    System.out.println("\t2 - 2v2 Adversaire et Equipier IA");
-    String choixModeDeJeu;
-
-    while (true) {
-      // On récupère le choix du joueur
-      choixModeDeJeu = new Scanner(System.in).next();
-
-      // Si le joueur n'a pas saisit 1 ou 2
-      if (!choixModeDeJeu.equals("1") && !choixModeDeJeu.equals("2")) {
-        System.out.println("Saisie incorrecte, choisissez entre '1' et '2'");
-      }
-      // Sinon on sort de la boucle
-      else {
-        break;
-      }
-    }
-    return Integer.parseInt(choixModeDeJeu);
+    System.out.println("Le vainqueur de la partie est " + resultat.equipeVainqueure().nom());
   }
 }
 

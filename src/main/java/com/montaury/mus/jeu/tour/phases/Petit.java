@@ -17,22 +17,9 @@ public class Petit extends Phase {
 
   @Override
   protected Joueur meilleurParmi(Opposants opposants) {
-    Joueur joueurEsku = opposants.joueurEsku();
-    Joueur joueurZaku = opposants.joueurZaku();
-
-
-    if (opposants.jouentEnEquipe()) {
-      Joueur joueurPriorite2 = opposants.joueurPriorite2();
-      Joueur joueurPriorite3 = opposants.joueurPriorite3();
-
-      Joueur meilleurJoueurEquipe1 = comparerDeuxJoueurs(joueurEsku, joueurPriorite3);
-      Joueur meilleurJoueurEquipe2 = comparerDeuxJoueurs(joueurPriorite2, joueurZaku);
-
-      return comparerDeuxJoueurs(meilleurJoueurEquipe1, meilleurJoueurEquipe2);
-    }
-    else {
-      return comparerDeuxJoueurs(joueurEsku, joueurZaku);
-    }
+    Joueur meilleurJoueurEquipe1 = comparerDeuxJoueurs(opposants.joueurEsku(), opposants.joueurPriorite3());
+    Joueur meilleurJoueurEquipe2 = comparerDeuxJoueurs(opposants.joueurPriorite2(), opposants.joueurZaku());
+    return comparerDeuxJoueurs(meilleurJoueurEquipe1, meilleurJoueurEquipe2);
   }
 
   protected Joueur comparerDeuxJoueurs(Joueur joueur1, Joueur joueur2) {
