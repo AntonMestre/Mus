@@ -22,24 +22,10 @@ public class Paires extends Phase {
       com.montaury.mus.jeu.carte.paires.Paires pairesJoueurPriorite2 = opposants.joueurPriorite2().main().getPaires();
       com.montaury.mus.jeu.carte.paires.Paires pairesJoueurPriorite3 = opposants.joueurPriorite3().main().getPaires();
 
-      if (pairesJoueurEsku.estMeilleureOuEgaleA(pairesJoueurZaku)
-          && pairesJoueurEsku.estMeilleureOuEgaleA(pairesJoueurPriorite2)
-          && pairesJoueurEsku.estMeilleureOuEgaleA(pairesJoueurPriorite3)) {
-        return opposants.joueurEsku();
-      }
-      else if (pairesJoueurPriorite2.estMeilleureOuEgaleA(pairesJoueurEsku)
-              && pairesJoueurPriorite2.estMeilleureOuEgaleA(pairesJoueurPriorite3)
-              && pairesJoueurPriorite2.estMeilleureOuEgaleA(pairesJoueurZaku)) {
-        return opposants.joueurPriorite2();
-      }
-      else if (pairesJoueurPriorite3.estMeilleureOuEgaleA(pairesJoueurEsku)
-              && pairesJoueurPriorite3.estMeilleureOuEgaleA(pairesJoueurPriorite2)
-              && pairesJoueurPriorite3.estMeilleureOuEgaleA(pairesJoueurZaku)) {
-        return opposants.joueurPriorite3();
-      }
-      else {
-        return opposants.joueurZaku();
-      }
+      Joueur meilleurJoueurEquipe1 = pairesJoueurEsku.estMeilleureOuEgaleA(pairesJoueurPriorite3) ? opposants.joueurEsku() : opposants.joueurPriorite3();
+      Joueur meilleurJoueurEquipe2 = pairesJoueurPriorite2.estMeilleureOuEgaleA(pairesJoueurZaku) ? opposants.joueurPriorite2() : opposants.joueurZaku();
+
+      return meilleurJoueurEquipe1.main().getPaires().estMeilleureOuEgaleA(meilleurJoueurEquipe2.main().getPaires()) ? meilleurJoueurEquipe1 : meilleurJoueurEquipe2;
     }
     else {
       return pairesJoueurEsku.estMeilleureOuEgaleA(pairesJoueurZaku) ? opposants.joueurEsku() : opposants.joueurZaku();
