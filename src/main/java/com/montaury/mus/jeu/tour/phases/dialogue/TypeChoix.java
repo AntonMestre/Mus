@@ -25,8 +25,8 @@ public enum TypeChoix {
     GEHIAGO.setChoixSuivantsPossibles(List.of(GEHIAGO, HORDAGO, IDOKI, TIRA));
     HORDAGO.setChoixSuivantsPossibles(List.of(KANTA, TIRA));
     KANTA.setChoixSuivantsPossibles(emptyList());
-    IDOKI.setChoixSuivantsPossibles(emptyList());
-    TIRA.setChoixSuivantsPossibles(emptyList());
+    IDOKI.setChoixSuivantsPossibles(List.of(GEHIAGO, HORDAGO, IDOKI, TIRA));
+    TIRA.setChoixSuivantsPossibles(List.of(GEHIAGO, HORDAGO, IDOKI, TIRA));
   }
 
   private final String nom;

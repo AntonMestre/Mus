@@ -41,7 +41,9 @@ public abstract class Phase {
       }
     }
     DialogueTermine dialogue = new Dialogue().derouler(affichage, opposants);
-    return conclure(dialogue, score, opposants);
+    Resultat resultat = conclure(dialogue, score, opposants);
+    affichage.finPhase(this,resultat);
+    return resultat;
   }
 
   private Resultat conclure(DialogueTermine dialogue, Manche.Score score, Opposants opposants) {

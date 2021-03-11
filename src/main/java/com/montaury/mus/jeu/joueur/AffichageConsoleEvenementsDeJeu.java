@@ -73,6 +73,11 @@ public class AffichageConsoleEvenementsDeJeu implements AffichageEvenementsDeJeu
   }
 
   @Override
+  public void finPhase(Phase phase,Phase.Resultat resultat) {
+    println("Résultat de la phase: equipe vainqueur ->" + resultat.equipeVainqueure().get().nom() + " a gagné ->"+resultat.points());
+  }
+
+  @Override
   public void partieTerminee(Partie.Resultat resultat) {
     println("La partie est terminée !");
 
