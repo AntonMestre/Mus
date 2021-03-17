@@ -19,25 +19,31 @@ class PartieTest {
   @BeforeEach
   void setUp() {
     interfaceJoueurEsku = mock(InterfaceJoueur.class);
+    interfaceJoueurPriorite2 = mock(InterfaceJoueur.class);
+    interfaceJoueurPriorite3 = mock(InterfaceJoueur.class);
     interfaceJoueurZaku = mock(InterfaceJoueur.class);
     Joueur joueurEsku = new Joueur("J1", interfaceJoueurEsku);
-    Joueur joueurZaku = new Joueur("J2", interfaceJoueurZaku);
-    opposants = new Opposants(joueurEsku, joueurZaku);
+    Joueur joueurPriorite2 = new Joueur("J2", interfaceJoueurPriorite2);
+    Joueur joueurPriorite3 = new Joueur("J3", interfaceJoueurPriorite3);
+    Joueur joueurZaku = new Joueur("J4", interfaceJoueurZaku);
+    opposants = new Opposants(joueurEsku, joueurPriorite2, joueurPriorite3, joueurZaku);
     partie = new Partie(mock(AffichageEvenementsDeJeu.class));
   }
 
   @Test
   void devrait_faire_gagner_le_premier_joueur_a_3_manches() {
     when(interfaceJoueurEsku.faireChoixParmi(any())).thenReturn(new Hordago());
-    when(interfaceJoueurZaku.faireChoixParmi(any())).thenReturn(new Kanta());
+    when(interfaceJoueurPriorite2.faireChoixParmi(any())).thenReturn(new Kanta());
 
     Partie.Resultat resultat = partie.jouer(opposants);
 
-    assertThat(resultat.vainqueur()).isNotNull();
+    assertThat(resultat.equipeVainqueure()).isNotNull();
     assertThat(resultat.score().resultatManches()).hasSizeGreaterThanOrEqualTo(3);
   }
 
   private InterfaceJoueur interfaceJoueurEsku;
+  private InterfaceJoueur interfaceJoueurPriorite2;
+  private InterfaceJoueur interfaceJoueurPriorite3;
   private InterfaceJoueur interfaceJoueurZaku;
   private Opposants opposants;
   private Partie partie;
