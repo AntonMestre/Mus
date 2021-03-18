@@ -13,8 +13,10 @@ class PairesTest {
   @Test
   void ne_doit_pas_se_derouler_si_personne_n_a_de_paires() {
     Opposants opposants = new Opposants(
-      unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.SIX_COUPE)),
-      unJoueurAvec(main(Carte.VALET_PIECE, Carte.SIX_PIECE, Carte.QUATRE_BATON, Carte.AS_PIECE))
+            unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.SIX_COUPE)),
+            unJoueurAvec(main(Carte.DEUX_BATON, Carte.TROIS_PIECE, Carte.QUATRE_BATON, Carte.CINQ_COUPE)),
+            unJoueurAvec(main(Carte.TROIS_BATON, Carte.QUATRE_PIECE, Carte.CINQ_BATON, Carte.SIX_COUPE)),
+            unJoueurAvec(main(Carte.VALET_PIECE, Carte.SIX_PIECE, Carte.QUATRE_BATON, Carte.AS_PIECE))
     );
 
     boolean peutSeDerouler = new Paires().peutSeDerouler(opposants);
@@ -23,10 +25,12 @@ class PairesTest {
   }
 
   @Test
-  void ne_doit_pas_se_derouler_si_un_des_joueurs_n_a_pas_de_paires() {
+  void ne_doit_pas_se_derouler_si_trois_des_joueurs_n_ont_pas_de_paires() {
     Opposants opposants = new Opposants(
-      unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.SIX_COUPE)),
-      unJoueurAvec(main(Carte.VALET_PIECE, Carte.SIX_PIECE, Carte.SIX_EPEE, Carte.AS_PIECE))
+            unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.SIX_COUPE)),
+            unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.SIX_COUPE)),
+            unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.SIX_COUPE)),
+            unJoueurAvec(main(Carte.VALET_PIECE, Carte.SIX_PIECE, Carte.SIX_EPEE, Carte.AS_PIECE))
     );
 
     boolean peutSeDerouler = new Paires().peutSeDerouler(opposants);
@@ -35,10 +39,12 @@ class PairesTest {
   }
 
   @Test
-  void devrait_se_derouler_si_les_deux_joueurs_ont_des_paires() {
+  void devrait_se_derouler_si_quatre_joueurs_ont_des_paires() {
     Opposants opposants = new Opposants(
-      unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.QUATRE_COUPE)),
-      unJoueurAvec(main(Carte.VALET_PIECE, Carte.SIX_PIECE, Carte.SIX_EPEE, Carte.AS_PIECE))
+            unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.QUATRE_COUPE)),
+            unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.QUATRE_COUPE)),
+            unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.QUATRE_COUPE)),
+            unJoueurAvec(main(Carte.VALET_PIECE, Carte.SIX_PIECE, Carte.SIX_EPEE, Carte.AS_PIECE))
     );
 
     boolean peutSeDerouler = new Paires().peutSeDerouler(opposants);
@@ -50,8 +56,10 @@ class PairesTest {
   void devrait_faire_gagner_le_joueur_ayant_la_meilleure_paire() {
     Joueur joueurZaku = unJoueurAvec(main(Carte.VALET_PIECE, Carte.SIX_PIECE, Carte.SIX_EPEE, Carte.AS_PIECE));
     Opposants opposants = new Opposants(
-      unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.QUATRE_COUPE)),
-      joueurZaku
+            unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.QUATRE_COUPE)),
+            unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.QUATRE_COUPE)),
+            unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.QUATRE_COUPE)),
+            joueurZaku
     );
 
     Joueur vainqueur = new Paires().meilleurParmi(opposants);
