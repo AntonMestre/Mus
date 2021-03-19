@@ -10,6 +10,8 @@ class DialogueTest {
 
   private final Joueur joueur1 = unJoueur();
   private final Joueur joueur2 = unJoueur();
+  private final Joueur joueur3 = unJoueur();
+  private final Joueur joueur4 = unJoueur();
 
   @Test
   void n_est_pas_termine_si_personne_n_a_parle() {
@@ -58,25 +60,29 @@ class DialogueTest {
     Dialogue dialogue = new Dialogue();
     dialogue.ajouter(new Paso(), joueur1);
     dialogue.ajouter(new Paso(), joueur2);
+    dialogue.ajouter(new Paso(), joueur3);
+    dialogue.ajouter(new Paso(), joueur4);
 
     assertThat(dialogue.enCours()).isFalse();
   }
 
   @Test
-  void est_termine_si_le_dernier_choix_est_tira() {
+  void est_termine_si_les_derniers_choix_sont_tira() {
     Dialogue dialogue = new Dialogue();
     dialogue.ajouter(new Paso(), joueur1);
     dialogue.ajouter(new Imido(), joueur2);
+    dialogue.ajouter(new Tira(), joueur3);
     dialogue.ajouter(new Tira(), joueur1);
 
     assertThat(dialogue.enCours()).isFalse();
   }
 
   @Test
-  void est_termine_si_le_dernier_choix_est_idoki() {
+  void est_termine_si_les_derniers_choix_sont_idoki() {
     Dialogue dialogue = new Dialogue();
     dialogue.ajouter(new Paso(), joueur1);
     dialogue.ajouter(new Imido(), joueur2);
+    dialogue.ajouter(new Idoki(), joueur3);
     dialogue.ajouter(new Idoki(), joueur1);
 
     assertThat(dialogue.enCours()).isFalse();

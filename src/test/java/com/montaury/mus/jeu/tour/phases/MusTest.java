@@ -26,8 +26,8 @@ class MusTest {
     interfaceJoueurPriorite3 = mock(InterfaceJoueur.class);
     interfaceJoueurZaku = mock(InterfaceJoueur.class);
     joueurEsku = new Joueur("J1", interfaceJoueurEsku);
-    joueurEsku = new Joueur("J2", interfaceJoueurPriorite2);
-    joueurZaku = new Joueur("J3", interfaceJoueurPriorite3);
+    joueurPriorite2 = new Joueur("J2", interfaceJoueurPriorite2);
+    joueurPriorite3 = new Joueur("J3", interfaceJoueurPriorite3);
     joueurZaku = new Joueur("J4", interfaceJoueurZaku);
     opposants = new Opposants(joueurEsku, joueurPriorite2, joueurPriorite3, joueurZaku);
   }
@@ -141,11 +141,11 @@ class MusTest {
     for(int i=0; i < saisieUtilisateur.length ; i++) assertThat(monInterfaceHumain.cartesAJeterCorrectes(saisieUtilisateur[i])).isEqualTo(false);
 
   }
-
+  /*
   @Test
   void devrait_renvoyer_un_message_demandant_de_ressaisir_les_cartes_a_jeter_si_le_joueur_ne_saisit_qu_une_virgule() {
 
-  }
+  }*/
 
   private Mus mus;
   private InterfaceJoueur interfaceJoueurEsku;

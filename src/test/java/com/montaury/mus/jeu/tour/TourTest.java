@@ -96,8 +96,9 @@ class TourTest {
   @Test
   void devrait_partager_les_points_si_tout_est_gehiago_puis_idoki() {
     when(interfaceJoueurEsku.faireChoixParmi(any())).thenReturn(new Imido(), new Idoki(), new Idoki());
-    when(interfaceJoueurPriorite2.faireChoixParmi(any())).thenReturn(new Gehiago(2));
-    when(interfaceJoueurEsku.faireChoixParmi(any())).thenReturn(new Gehiago(2), new Idoki());
+    when(interfaceJoueurPriorite2.faireChoixParmi(any())).thenReturn(new Gehiago(2), new Idoki());
+    when(interfaceJoueurPriorite3.faireChoixParmi(any())).thenReturn(new Gehiago(2), new Idoki());
+    when(interfaceJoueurZaku.faireChoixParmi(any())).thenReturn(new Gehiago(2), new Idoki());
 
     tour.jouer(opposants, score);
 
