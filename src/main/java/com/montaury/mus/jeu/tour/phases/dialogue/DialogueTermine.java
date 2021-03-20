@@ -51,6 +51,7 @@ public class DialogueTermine {
   public Joueur avantDernierJoueur() {
     return choix.get(choix.size() - 2).joueur;
   }
+  public Joueur avantAvantDernierJoueur() { return choix.get(choix.size() - 3).joueur; }
 
   public boolean estSuspendu() {
     return dernierChoix().est(IDOKI) || dernierChoix().est(PASO);

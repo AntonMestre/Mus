@@ -35,7 +35,7 @@ class TourTest {
     joueurZaku = new Joueur("J4", interfaceJoueurZaku);
     opposants = new Opposants(joueurEsku, joueurPriorite2, joueurPriorite3, joueurZaku);
     equipe1 = new Equipe(joueurEsku, joueurPriorite3, "E1");
-    equipe2 = new Equipe(joueurEsku, joueurPriorite3, "E2");
+    equipe2 = new Equipe(joueurPriorite2, joueurZaku, "E2");
     score = new Manche.Score(opposants);
     evenementsDeJeu = mock(AffichageEvenementsDeJeu.class);
     tour = new Tour(evenementsDeJeu, paquetEntierCroissant(), new Defausse());
@@ -65,7 +65,7 @@ class TourTest {
 
     assertThat(score.equipeVainqueure()).isEmpty();
     assertThat(score.scoreParEquipe()).containsEntry(equipe1, 1);
-    assertThat(score.scoreParEquipe()).containsEntry(equipe2, 5);
+    assertThat(score.scoreParEquipe()).containsEntry(equipe2, 3);
   }
 
   @Test
@@ -90,7 +90,7 @@ class TourTest {
 
     assertThat(score.equipeVainqueure()).isEmpty();
     assertThat(score.scoreParEquipe()).containsEntry(equipe1, 2);
-    assertThat(score.scoreParEquipe()).containsEntry(equipe2, 10);
+    assertThat(score.scoreParEquipe()).containsEntry(equipe2, 6);
   }
 
   @Test
@@ -103,21 +103,26 @@ class TourTest {
     tour.jouer(opposants, score);
 
     assertThat(score.equipeVainqueure()).isEmpty();
-    assertThat(score.scoreParEquipe()).containsEntry(equipe1, 4);
-    assertThat(score.scoreParEquipe()).containsEntry(equipe2, 16);
+    assertThat(score.scoreParEquipe()).containsEntry(equipe2, 8);
+    assertThat(score.scoreParEquipe()).containsEntry(equipe1, 0);
   }
 
   @Test
   void devrait_privilegier_le_joueur_esku_si_les_mains_sont_identiques() {
     when(interfaceJoueurEsku.faireChoixParmi(any())).thenReturn(new Imido());
+    when(interfaceJoueurPriorite2.faireChoixParmi(any())).thenReturn(new Idoki());
+    when(interfaceJoueurPriorite3.faireChoixParmi(any())).thenReturn(new Idoki());
     when(interfaceJoueurZaku.faireChoixParmi(any())).thenReturn(new Idoki());
 
-    Tour tour = new Tour(evenementsDeJeu, paquetAvec(Carte.AS_BATON, Carte.DEUX_BATON, Carte.TROIS_BATON, Carte.QUATRE_BATON, Carte.AS_COUPE, Carte.DEUX_COUPE, Carte.TROIS_COUPE, Carte.QUATRE_COUPE), new Defausse());
+    Tour tour = new Tour(evenementsDeJeu, paquetAvec( Carte.AS_BATON, Carte.DEUX_BATON, Carte.TROIS_BATON, Carte.QUATRE_BATON,
+                                                      Carte.AS_COUPE, Carte.DEUX_COUPE, Carte.TROIS_COUPE, Carte.QUATRE_COUPE,
+                                                      Carte.AS_BATON, Carte.DEUX_BATON, Carte.TROIS_BATON, Carte.QUATRE_BATON,
+                                                      Carte.AS_BATON, Carte.DEUX_BATON, Carte.TROIS_BATON, Carte.QUATRE_BATON), new Defausse());
 
     tour.jouer(opposants, score);
 
     assertThat(score.equipeVainqueure()).isEmpty();
-    assertThat(score.scoreParEquipe()).containsEntry(equipe1, 7);
+    assertThat(score.scoreParEquipe()).containsEntry(equipe1, 6);
     assertThat(score.scoreParEquipe()).containsEntry(equipe2, 0);
   }
 

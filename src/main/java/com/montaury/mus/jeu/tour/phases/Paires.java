@@ -32,7 +32,7 @@ public class Paires extends Phase {
     }
 
     if (opposants.joueurPriorite2().main().aDesPaires() && opposants.joueurZaku().main().aDesPaires()) {
-      meilleurJoueurEquipe2 = opposants.joueurPriorite2().main().getPaires().estMeilleureOuEgaleA(opposants.joueurEsku().main().getPaires()) ? opposants.joueurPriorite2() : opposants.joueurEsku();
+      meilleurJoueurEquipe2 = opposants.joueurPriorite2().main().getPaires().estMeilleureOuEgaleA(opposants.joueurZaku().main().getPaires()) ? opposants.joueurPriorite2() : opposants.joueurZaku();
     }
     else if (opposants.joueurPriorite2().main().aDesPaires() && !opposants.joueurZaku().main().aDesPaires()) {
       meilleurJoueurEquipe2 = opposants.joueurPriorite2();

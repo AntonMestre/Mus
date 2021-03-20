@@ -55,7 +55,7 @@ class MancheTest {
 
     Manche.Resultat resultat = manche.jouer(opposants);
 
-    assertThat(resultat.equipeVainqueure()).isEqualTo(equipe2);
+    assertThat(resultat.equipeVainqueure()).isEqualTo(equipe1);
     assertThat(resultat.pointsVaincu()).isZero();
   }
 
