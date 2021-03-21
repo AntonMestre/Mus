@@ -56,6 +56,17 @@ class DialogueTest {
   }
 
   @Test
+  void n_est_pas_termine_si_seuleument_trois_paso() {
+    Dialogue dialogue = new Dialogue();
+    dialogue.ajouter(new Paso(), joueur1);
+    dialogue.ajouter(new Paso(), joueur2);
+    dialogue.ajouter(new Paso(), joueur3);
+    dialogue.ajouter(new Imido(), joueur4);
+
+    assertThat(dialogue.enCours()).isTrue();
+  }
+
+  @Test
   void est_termine_si_tout_le_monde_est_paso() {
     Dialogue dialogue = new Dialogue();
     dialogue.ajouter(new Paso(), joueur1);
@@ -67,12 +78,11 @@ class DialogueTest {
   }
 
   @Test
-  void est_termine_si_les_derniers_choix_sont_tira() {
+  void est_termine_si_le_dernier_choix_est_tira() {
     Dialogue dialogue = new Dialogue();
     dialogue.ajouter(new Paso(), joueur1);
     dialogue.ajouter(new Imido(), joueur2);
     dialogue.ajouter(new Tira(), joueur3);
-    dialogue.ajouter(new Tira(), joueur1);
 
     assertThat(dialogue.enCours()).isFalse();
   }

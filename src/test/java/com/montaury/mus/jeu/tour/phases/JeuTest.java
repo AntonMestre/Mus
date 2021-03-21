@@ -53,6 +53,20 @@ class JeuTest {
   }
 
   @Test
+  void devrait_se_derouler_si_deux_joueurs_ont_le_jeu() {
+    Opposants opposants = new Opposants(
+            unJoueurAvec(main(Carte.ROI_COUPE, Carte.SEPT_EPEE, Carte.VALET_BATON, Carte.VALET_COUPE)),
+            unJoueurAvec(main(Carte.SIX_COUPE, Carte.AS_EPEE, Carte.ROI_BATON, Carte.VALET_COUPE)),
+            unJoueurAvec(main(Carte.SIX_COUPE, Carte.SEPT_EPEE, Carte.TROIS_BATON, Carte.DEUX_COUPE)),
+            unJoueurAvec(main(Carte.VALET_PIECE, Carte.CAVALIER_PIECE, Carte.ROI_BATON, Carte.AS_PIECE))
+    );
+
+    boolean peutSeDerouler = new Jeu().peutSeDerouler(opposants);
+
+    assertThat(peutSeDerouler).isTrue();
+  }
+
+  @Test
   void devrait_faire_gagner_le_joueur_ayant_31_par_rapport_aux_32_32_et_34() {
     Joueur joueurEsku = unJoueurAvec(main(Carte.SIX_COUPE, Carte.ROI_EPEE, Carte.VALET_BATON, Carte.SIX_BATON));
     Joueur joueurPriorite2 = unJoueurAvec(main(Carte.SIX_COUPE, Carte.ROI_EPEE, Carte.VALET_BATON, Carte.SIX_BATON));

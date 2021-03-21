@@ -15,35 +15,19 @@ public class Paires extends Phase {
 
   @Override
   protected Joueur meilleurParmi(Opposants opposants) {
-    Joueur meilleurJoueurEquipe1 = opposants.joueurEsku();
-    Joueur meilleurJoueurEquipe2 = opposants.joueurPriorite2();
+    Joueur meilleurJoueurEquipe1 = comparerDeuxJoueurs(opposants.joueurEsku(), opposants.joueurPriorite3());
+    Joueur meilleurJoueurEquipe2 = comparerDeuxJoueurs(opposants.joueurPriorite2(), opposants.joueurZaku());
 
-    if (opposants.joueurEsku().main().aDesPaires() && opposants.joueurPriorite3().main().aDesPaires()) {
-      meilleurJoueurEquipe1 = opposants.joueurEsku().main().getPaires().estMeilleureOuEgaleA(opposants.joueurPriorite3().main().getPaires()) ? opposants.joueurEsku() : opposants.joueurPriorite3();
-    }
-    else if (opposants.joueurEsku().main().aDesPaires() && !opposants.joueurPriorite3().main().aDesPaires()) {
-      meilleurJoueurEquipe1 = opposants.joueurEsku();
-    }
-    else if (!opposants.joueurEsku().main().aDesPaires() && opposants.joueurPriorite3().main().aDesPaires()) {
-      meilleurJoueurEquipe1 = opposants.joueurPriorite3();
-    }
-    else if (!opposants.joueurEsku().main().aDesPaires() && !opposants.joueurPriorite3().main().aDesPaires()) {
-      return opposants.joueurPriorite2().main().getPaires().estMeilleureOuEgaleA(opposants.joueurZaku().main().getPaires()) ? opposants.joueurPriorite2() : opposants.joueurZaku();
-    }
+    return comparerDeuxJoueurs(meilleurJoueurEquipe1, meilleurJoueurEquipe2);
+  }
 
-    if (opposants.joueurPriorite2().main().aDesPaires() && opposants.joueurZaku().main().aDesPaires()) {
-      meilleurJoueurEquipe2 = opposants.joueurPriorite2().main().getPaires().estMeilleureOuEgaleA(opposants.joueurZaku().main().getPaires()) ? opposants.joueurPriorite2() : opposants.joueurZaku();
+  private Joueur comparerDeuxJoueurs(Joueur joueur1, Joueur joueur2) {
+    if (joueur1.main().aDesPaires() && joueur2.main().aDesPaires()) {
+      return joueur1.main().getPaires().estMeilleureOuEgaleA(joueur2.main().getPaires()) ? joueur1 : joueur2;
     }
-    else if (opposants.joueurPriorite2().main().aDesPaires() && !opposants.joueurZaku().main().aDesPaires()) {
-      meilleurJoueurEquipe2 = opposants.joueurPriorite2();
-    }
-    else if (!opposants.joueurPriorite2().main().aDesPaires() && opposants.joueurZaku().main().aDesPaires()) {
-      meilleurJoueurEquipe2 = opposants.joueurZaku();
-    }
-    else if (!opposants.joueurPriorite2().main().aDesPaires() && !opposants.joueurZaku().main().aDesPaires()) {
-      return opposants.joueurEsku().main().getPaires().estMeilleureOuEgaleA(opposants.joueurEsku().main().getPaires()) ? opposants.joueurPriorite2() : opposants.joueurEsku();
-    }
-    return meilleurJoueurEquipe1.main().getPaires().estMeilleureOuEgaleA(meilleurJoueurEquipe2.main().getPaires()) ? meilleurJoueurEquipe1 : meilleurJoueurEquipe2;
+    else if (joueur1.main().aDesPaires() && !joueur2.main().aDesPaires()) return joueur1;
+    else if (!joueur1.main().aDesPaires() && joueur2.main().aDesPaires()) return joueur2;
+    return null;
   }
 
   @Override

@@ -53,6 +53,34 @@ class PairesTest {
   }
 
   @Test
+  void devrait_se_derouler_si_trois_joueurs_ont_des_paires() {
+    Opposants opposants = new Opposants(
+            unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.QUATRE_COUPE)),
+            unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.QUATRE_COUPE)),
+            unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.QUATRE_COUPE)),
+            unJoueurAvec(main(Carte.VALET_PIECE, Carte.CINQ_PIECE, Carte.SIX_EPEE, Carte.AS_PIECE))
+    );
+
+    boolean peutSeDerouler = new Paires().peutSeDerouler(opposants);
+
+    assertThat(peutSeDerouler).isTrue();
+  }
+
+  @Test
+  void devrait_se_derouler_si_deux_joueurs_ont_des_paires() {
+    Opposants opposants = new Opposants(
+            unJoueurAvec(main(Carte.AS_BATON, Carte.CINQ_PIECE, Carte.VALET_BATON, Carte.QUATRE_COUPE)),
+            unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.QUATRE_COUPE)),
+            unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.QUATRE_COUPE)),
+            unJoueurAvec(main(Carte.VALET_PIECE, Carte.CINQ_PIECE, Carte.SIX_EPEE, Carte.AS_PIECE))
+    );
+
+    boolean peutSeDerouler = new Paires().peutSeDerouler(opposants);
+
+    assertThat(peutSeDerouler).isTrue();
+  }
+
+  @Test
   void devrait_faire_gagner_le_joueur_ayant_la_meilleure_paire() {
     Joueur joueurZaku = unJoueurAvec(main(Carte.VALET_PIECE, Carte.SIX_PIECE, Carte.SIX_EPEE, Carte.AS_PIECE));
     Opposants opposants = new Opposants(

@@ -17,7 +17,7 @@ public class Dialogue {
     do {
       Joueur parlant = iteratorJoueur.next();
       if(choix.size() >= 1){
-        if(dernierChoix().est(IDOKI) || dernierChoix().est(TIRA)){
+        if(dernierChoix().est(IDOKI)){
           parlant = iteratorJoueur.next();
         }
       }
@@ -34,17 +34,16 @@ public class Dialogue {
   }
 
   boolean enCours() {
-    if(choix.size() >= 2){
-      if(dernierChoix().est(IDOKI) && avantDernierChoix().est(IDOKI)) return false;
-      if(choix.size() >= 4) {
-        if (choix.get(choix.size() - 1).choix.est(PASO) && choix.get(choix.size() - 2).choix.est(PASO) && choix.get(choix.size() - 3).choix.est(PASO) && choix.get(choix.size() - 4).choix.est(PASO)) return false;
+    if (choix.size() >= 2) {
+      if (dernierChoix().est(IDOKI) && avantDernierChoix().est(IDOKI)) return false;
+      if (choix.size() >= 4) {
+        if (quatreDerniersChoixSontPaso()) return false;
       }
-      if(dernierChoix().est(TIRA) && avantDernierChoix().est(TIRA)) return false;
-      if(dernierChoix().est(HORDAGO) && (avantDernierChoix().est(KANTA) || avantDernierChoix().est(TIRA)))return false;
-      if(dernierChoix().metFinAuDialogue())return false;
+      if (dernierChoix().est(TIRA)) return false;
+      if (avantDernierChoix().est(HORDAGO) && (dernierChoix().est(KANTA) || dernierChoix().est(TIRA))) return false;
+      if (dernierChoix().metFinAuDialogue()) return false;
     }
     return true;
-    //return choix.size() <= 1 || (!dernierChoix().metFinAuDialogue() && !dernierChoix().est(PASO));
   }
 
   private Choix dernierChoix() {
@@ -52,6 +51,14 @@ public class Dialogue {
   }
   private Choix avantDernierChoix() {
     return choix.get(choix.size() - 2).choix;
+  }
+
+  private boolean quatreDerniersChoixSontPaso() {
+    if (!choix.get(choix.size()-4).choix.est(PASO)) return false;
+    if (!choix.get(choix.size()-3).choix.est(PASO)) return false;
+    if (!choix.get(choix.size()-2).choix.est(PASO)) return false;
+    if (!choix.get(choix.size()-1).choix.est(PASO)) return false;
+    return true;
   }
 
   private List<TypeChoix> prochainsChoixPossibles() {

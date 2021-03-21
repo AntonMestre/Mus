@@ -45,12 +45,11 @@ class TourTest {
   void devrait_donner_tous_les_points_au_joueur_esku_si_l_equipe_2_fait_tira() {
     when(interfaceJoueurEsku.faireChoixParmi(any())).thenReturn(new Imido());
     when(interfaceJoueurPriorite2.faireChoixParmi(any())).thenReturn(new Tira());
-    when(interfaceJoueurZaku.faireChoixParmi(any())).thenReturn(new Tira());
 
     tour.jouer(opposants, score);
 
     assertThat(score.equipeVainqueure()).isEmpty();
-    assertThat(score.scoreParEquipe()).containsEntry(equipe1, 8);
+    assertThat(score.scoreParEquipe()).containsEntry(equipe1, 4);
     assertThat(score.scoreParEquipe()).containsEntry(equipe2, 0);
   }
 

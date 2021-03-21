@@ -41,6 +41,11 @@ public class Joueur {
     }
   }
 
+  public boolean estDeLaMemeEquipeQue(Joueur joueur) {
+    if (this.equipe == joueur.getEquipe()) return true;
+    return false;
+  }
+
 
   public void donnerCartes(List<Carte> cartes) {
     main.ajouter(cartes);

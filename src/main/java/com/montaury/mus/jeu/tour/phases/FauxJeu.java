@@ -16,6 +16,11 @@ public class FauxJeu extends Phase {
   }
 
   @Override
+  public boolean peutSeDerouler(Opposants opposants) {
+    return (peutParticiper(opposants.joueurEsku()) && peutParticiper(opposants.joueurPriorite3())) && peutParticiper(opposants.joueurPriorite2()) && peutParticiper(opposants.joueurZaku());
+  }
+
+  @Override
   protected Joueur meilleurParmi(Opposants opposants) {
 
     int pointsJoueurEsku = opposants.joueurEsku().main().pointsPourJeu();
