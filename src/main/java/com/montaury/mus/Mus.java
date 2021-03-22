@@ -15,10 +15,8 @@ public class Mus {
     String nomJoueur = new Scanner(System.in).next();
     Joueur humain = Joueur.humain(nomJoueur);
 
-    // Création d'un adversaire customisé
+    // Création d'adversaires customisés
     Joueur ordinateur1 = Joueur.ordinateur("Adversaire 1");
-
-    // Création d'adversaires supplémentaires customisés
     Joueur ordinateur2 = Joueur.ordinateur("Coequipier");
     Joueur ordinateur3 = Joueur.ordinateur("Adversaire 2");
 
