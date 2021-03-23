@@ -16,7 +16,7 @@ public class Dialogue {
     Iterator<Joueur> iteratorJoueur = opposants.itererDansLOrdre();
     do {
       Joueur parlant = iteratorJoueur.next();
-      if(choix.size() >= 1 && dernierChoix().est(IDOKI)){
+      if(!choix.isEmpty() && dernierChoix().est(IDOKI)){
         parlant = iteratorJoueur.next();
       }
       Choix choixJoueur = parlant.interfaceJoueur.faireChoixParmi(prochainsChoixPossibles());
@@ -48,11 +48,10 @@ public class Dialogue {
   }
 
   private boolean quatreDerniersChoixSontPaso() {
-    if (!choix.get(choix.size()-4).choix.est(PASO)) return false;
-    if (!choix.get(choix.size()-3).choix.est(PASO)) return false;
-    if (!choix.get(choix.size()-2).choix.est(PASO)) return false;
-    if (!choix.get(choix.size()-1).choix.est(PASO)) return false;
-    return true;
+    return !choix.get(choix.size()-4).choix.est(PASO)
+      || !choix.get(choix.size()-3).choix.est(PASO)
+      || !choix.get(choix.size()-2).choix.est(PASO)
+      || !choix.get(choix.size()-1).choix.est(PASO);
   }
 
   private List<TypeChoix> prochainsChoixPossibles() {

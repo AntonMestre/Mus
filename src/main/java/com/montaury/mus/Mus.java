@@ -25,9 +25,8 @@ public class Mus {
     String nomEquipeJoueur = new Scanner(System.in).next();
 
     // Inscription des équipes
-    Equipe equipeJoueur = new Equipe(humain, ordinateur2, nomEquipeJoueur);
-    Equipe equipeOrdi = new Equipe(ordinateur1, ordinateur3, "Team IA");
-
+    new Equipe(humain, ordinateur2, nomEquipeJoueur);
+    new Equipe(ordinateur1, ordinateur3, "Team IA");
 
     Partie partie = new Partie(new AffichageConsoleEvenementsDeJeu(humain));
     Partie.Resultat resultat = partie.jouer(new Opposants(humain, ordinateur1,ordinateur2,ordinateur3));

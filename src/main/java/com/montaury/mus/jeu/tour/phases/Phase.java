@@ -35,10 +35,8 @@ public abstract class Phase {
     if (joueurs.size() == 1) {
       return Resultat.termine(joueurs.get(0).getEquipe(), pointsBonus(joueurs.get(0)));
     }
-    if (joueurs.size() == 2) {
-      if (joueurs.get(0).estDeLaMemeEquipeQue(joueurs.get(1))) {
-        return Resultat.termine(joueurs.get(0).getEquipe(), pointsBonus(joueurs.get(0)) + pointsBonus(joueurs.get(1)));
-      }
+    if (joueurs.size() == 2 && joueurs.get(0).estDeLaMemeEquipeQue(joueurs.get(1))) {
+      return Resultat.termine(joueurs.get(0).getEquipe(), pointsBonus(joueurs.get(0)) + pointsBonus(joueurs.get(1)));
     }
     DialogueTermine dialogue = new Dialogue().derouler(affichage, opposants);
     Resultat resultat = conclure(dialogue, score, opposants);
@@ -69,7 +67,7 @@ public abstract class Phase {
   }
 
   public boolean peutSeDerouler(Opposants opposants) {
-    return ((peutParticiper(opposants.joueurEsku()) || peutParticiper(opposants.joueurPriorite3()))) && (peutParticiper(opposants.joueurPriorite2()) || peutParticiper(opposants.joueurZaku()));
+    return (peutParticiper(opposants.joueurEsku()) || peutParticiper(opposants.joueurPriorite3())) && (peutParticiper(opposants.joueurPriorite2()) || peutParticiper(opposants.joueurZaku()));
   }
 
   protected boolean peutParticiper(Joueur joueur) {

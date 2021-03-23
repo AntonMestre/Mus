@@ -42,8 +42,8 @@ public class Joueur {
   }
 
   public boolean estDeLaMemeEquipeQue(Joueur joueur) {
-    if (this.equipe == joueur.getEquipe()) return true;
-    return false;
+    return this.equipe == joueur.getEquipe();
+
   }
 
 
