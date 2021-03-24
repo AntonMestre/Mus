@@ -16,6 +16,9 @@ public interface AffichageEvenementsDeJeu {
   void nouvelleMain(Joueur joueur);
 
   void nouvellePhase(Phase phase);
-  void finPhase(Phase phase, Phase.Resultat resultat);
+  void finPhase(String nomEquipeVainqueure, int pointsBonus);
+  void aucunJoueurNePeutParticiper();
+  void unSeulJoueurPeutParticiper(String nomJoueur, int pointsBonusDuJoueur);
+  void deuxJoueursDeLaMemeEquipePeuventParticiper(String j1, String j2, int ptsBonus1, int ptsBonus2);
   void partieTerminee(Partie.Resultat resultat);
 }

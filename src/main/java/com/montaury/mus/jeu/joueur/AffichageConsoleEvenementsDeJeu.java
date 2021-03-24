@@ -83,8 +83,8 @@ public class AffichageConsoleEvenementsDeJeu implements AffichageEvenementsDeJeu
   }
 
   @Override
-  public void finPhase(Phase phase,Phase.Resultat resultat) {
-    println("Résultat de la phase: equipe vainqueure -> " + resultat.equipeVainqueure().get().nom());
+  public void finPhase(String nomEquipeVainqueure, int pointsBonus) {
+    println(nomEquipeVainqueure + " gagne la phase ! Ils empochent " + pointsBonus + " points bonus !");
   }
 
   @Override
@@ -93,6 +93,21 @@ public class AffichageConsoleEvenementsDeJeu implements AffichageEvenementsDeJeu
 
     println("Vainqueur: " + resultat.equipeVainqueure());
 
+  }
+
+  @Override
+  public void aucunJoueurNePeutParticiper() {
+    println("Aucun joueur de ne peut participer !");
+  }
+
+  @Override
+  public void unSeulJoueurPeutParticiper(String nomJoueur, int pointsBonusDuJoueur) {
+    println("Seul " + nomJoueur + " peut participer. Il gagne " + pointsBonusDuJoueur + " points bonus pour son équipe !");
+  }
+
+  @Override
+  public void deuxJoueursDeLaMemeEquipePeuventParticiper(String j1, String j2, int ptsBonus1, int ptsBonus2) {
+    System.out.println("Seuls " + j1 + " et " + j2 + "peuvent participer. Ils gagnent " + ptsBonus1 + " et " + ptsBonus2 + " points bonus pour leur équipe !");
   }
 
   private void println(String string) {

@@ -16,9 +16,8 @@ public class Equipe {
 
         this.nom = nom;
     }
-    public List<Joueur> getJoueurs() { return List.of(this.joueur1, this.joueur2); }
-    public Joueur getCoequipier(Joueur joueur) {
-        return joueur == this.joueur1 ? joueur2 : joueur1;
-    }
+
+    public List<Joueur> joueurs() { return List.of(this.joueur1, this.joueur2); }
+
     public String nom() { return this.nom; }
 }

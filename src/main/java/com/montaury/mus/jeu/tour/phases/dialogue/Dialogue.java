@@ -40,6 +40,7 @@ public class Dialogue {
     return true;
   }
 
+
   private Choix dernierChoix() {
     return choix.get(choix.size() - 1).choix;
   }
@@ -48,10 +49,10 @@ public class Dialogue {
   }
 
   private boolean quatreDerniersChoixSontPaso() {
-    return !choix.get(choix.size()-4).choix.est(PASO)
-      || !choix.get(choix.size()-3).choix.est(PASO)
-      || !choix.get(choix.size()-2).choix.est(PASO)
-      || !choix.get(choix.size()-1).choix.est(PASO);
+    return choix.get(choix.size()-4).choix.est(PASO)
+      && choix.get(choix.size()-3).choix.est(PASO)
+      && choix.get(choix.size()-2).choix.est(PASO)
+      && choix.get(choix.size()-1).choix.est(PASO);
   }
 
   private List<TypeChoix> prochainsChoixPossibles() {
