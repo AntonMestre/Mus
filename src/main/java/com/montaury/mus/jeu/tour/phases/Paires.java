@@ -32,6 +32,9 @@ public class Paires extends Phase {
 
   @Override
   public int pointsBonus(Joueur vainqueur) {
-    return vainqueur.main().getPaires().pointsBonus();
+    if (vainqueur.main().aDesPaires()) {
+      return vainqueur.main().getPaires().pointsBonus();
+    }
+    return 0;
   }
 }

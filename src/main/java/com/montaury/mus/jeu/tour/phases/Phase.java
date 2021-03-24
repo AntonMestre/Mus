@@ -30,17 +30,20 @@ public abstract class Phase {
     affichage.nouvellePhase(this);
     List<Joueur> joueurs = participantsParmi(opposants);
     if (joueurs.isEmpty()) {
+      affichage.aucunJoueurNePeutParticiper();
       return Resultat.nonJouable();
     }
     if (joueurs.size() == 1) {
+      affichage.unSeulJoueurPeutParticiper(joueurs.get(0).nom(), pointsBonus(joueurs.get(0)));
       return Resultat.termine(joueurs.get(0).getEquipe(), pointsBonus(joueurs.get(0)));
     }
     if (joueurs.size() == 2 && joueurs.get(0).estDeLaMemeEquipeQue(joueurs.get(1))) {
+      affichage.deuxJoueursDeLaMemeEquipePeuventParticiper(joueurs.get(0).nom(), joueurs.get(1).nom(), pointsBonus(joueurs.get(0)), pointsBonus(joueurs.get(1)));
       return Resultat.termine(joueurs.get(0).getEquipe(), pointsBonus(joueurs.get(0)) + pointsBonus(joueurs.get(1)));
     }
     DialogueTermine dialogue = new Dialogue().derouler(affichage, opposants);
     Resultat resultat = conclure(dialogue, score, opposants);
-    affichage.finPhase(this,resultat);
+    affichage.finPhase(resultat.equipeVainqueure.nom(), pointsBonus(resultat.equipeVainqueure.joueurs().get(0)) + pointsBonus(resultat.equipeVainqueure.joueurs().get(1)));
     return resultat;
   }
 
@@ -48,7 +51,7 @@ public abstract class Phase {
     if (dialogue.estConcluPar(TIRA)) {
       Equipe equipeEmportantLaMise = dialogue.avantDernierJoueur().getEquipe();
       score.scorer(equipeEmportantLaMise, dialogue.pointsEngages());
-      return Resultat.termine(equipeEmportantLaMise, pointsBonus(equipeEmportantLaMise));
+      return Resultat.termine(equipeEmportantLaMise, pointsBonus(equipeEmportantLaMise.joueurs().get(0)) + pointsBonus(equipeEmportantLaMise.joueurs().get(1)));
     }
     if (dialogue.estConcluPar(KANTA)) {
       Equipe equipeVainqueure = meilleurParmi(opposants).getEquipe();
@@ -56,7 +59,7 @@ public abstract class Phase {
       return Resultat.termine(equipeVainqueure, 0);
     }
     Equipe equipeVainqueurePhase = meilleurParmi(opposants).getEquipe();
-    int bonus = pointsBonus(equipeVainqueurePhase);
+    int bonus = pointsBonus(equipeVainqueurePhase.joueurs().get(0)) + pointsBonus(equipeVainqueurePhase.joueurs().get(1));
     return Resultat.suspendu(equipeVainqueurePhase, dialogue.estConcluPar(PASO) && bonus != 0 ? 0 : dialogue.pointsEngages(), bonus);
   }
 
@@ -77,7 +80,6 @@ public abstract class Phase {
   protected abstract Joueur meilleurParmi(Opposants opposants);
 
   protected int pointsBonus(Joueur vainqueur) { return 0; }
-  protected int pointsBonus(Equipe equipeVainqueure) { return 0; }
 
   public static class Resultat {
     public static Resultat nonJouable() {

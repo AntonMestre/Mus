@@ -49,7 +49,7 @@ class TourTest {
     tour.jouer(opposants, score);
 
     assertThat(score.equipeVainqueure()).isEmpty();
-    assertThat(score.scoreParEquipe()).containsEntry(equipe1, 4);
+    assertThat(score.scoreParEquipe()).containsEntry(equipe1, 12);
     assertThat(score.scoreParEquipe()).containsEntry(equipe2, 0);
   }
 
@@ -64,7 +64,7 @@ class TourTest {
 
     assertThat(score.equipeVainqueure()).isEmpty();
     assertThat(score.scoreParEquipe()).containsEntry(equipe1, 1);
-    assertThat(score.scoreParEquipe()).containsEntry(equipe2, 3);
+    assertThat(score.scoreParEquipe()).containsEntry(equipe2, 9);
   }
 
   @Test
@@ -89,7 +89,7 @@ class TourTest {
 
     assertThat(score.equipeVainqueure()).isEmpty();
     assertThat(score.scoreParEquipe()).containsEntry(equipe1, 2);
-    assertThat(score.scoreParEquipe()).containsEntry(equipe2, 6);
+    assertThat(score.scoreParEquipe()).containsEntry(equipe2, 14);
   }
 
   @Test
@@ -102,7 +102,7 @@ class TourTest {
     tour.jouer(opposants, score);
 
     assertThat(score.equipeVainqueure()).isEmpty();
-    assertThat(score.scoreParEquipe()).containsEntry(equipe2, 8);
+    assertThat(score.scoreParEquipe()).containsEntry(equipe2, 16);
     assertThat(score.scoreParEquipe()).containsEntry(equipe1, 0);
   }
 
@@ -121,7 +121,7 @@ class TourTest {
     tour.jouer(opposants, score);
 
     assertThat(score.equipeVainqueure()).isEmpty();
-    assertThat(score.scoreParEquipe()).containsEntry(equipe1, 6);
+    assertThat(score.scoreParEquipe()).containsEntry(equipe1, 8);
     assertThat(score.scoreParEquipe()).containsEntry(equipe2, 0);
   }
 
