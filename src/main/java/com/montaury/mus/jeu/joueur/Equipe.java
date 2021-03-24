@@ -1,5 +1,7 @@
 package com.montaury.mus.jeu.joueur;
 
+import java.util.List;
+
 public class Equipe {
     private Joueur joueur1;
     private Joueur joueur2;
@@ -14,7 +16,7 @@ public class Equipe {
 
         this.nom = nom;
     }
-
+    public List<Joueur> getJoueurs() { return List.of(this.joueur1, this.joueur2); }
     public Joueur getCoequipier(Joueur joueur) {
         return joueur == this.joueur1 ? joueur2 : joueur1;
     }

@@ -33,10 +33,10 @@ public abstract class Phase {
       return Resultat.nonJouable();
     }
     if (joueurs.size() == 1) {
-      return Resultat.termine(joueurs.get(0).getEquipe(), pointsBonus(joueurs.get(0)));
+      return Resultat.termine(joueurs.get(0).getEquipe(), pointsBonus(joueurs.get(0).getEquipe()));
     }
     if (joueurs.size() == 2 && joueurs.get(0).estDeLaMemeEquipeQue(joueurs.get(1))) {
-      return Resultat.termine(joueurs.get(0).getEquipe(), pointsBonus(joueurs.get(0)) + pointsBonus(joueurs.get(1)));
+      return Resultat.termine(joueurs.get(0).getEquipe(), pointsBonus(joueurs.get(0).getEquipe()));
     }
     DialogueTermine dialogue = new Dialogue().derouler(affichage, opposants);
     Resultat resultat = conclure(dialogue, score, opposants);

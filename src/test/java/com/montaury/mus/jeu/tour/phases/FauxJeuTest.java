@@ -1,6 +1,7 @@
 package com.montaury.mus.jeu.tour.phases;
 
 import com.montaury.mus.jeu.carte.Carte;
+import com.montaury.mus.jeu.joueur.Equipe;
 import com.montaury.mus.jeu.joueur.Joueur;
 import com.montaury.mus.jeu.joueur.Opposants;
 import org.junit.jupiter.api.Test;
@@ -71,8 +72,10 @@ class FauxJeuTest {
   @Test
   void doit_faire_gagner_un_bonus_de_1() {
     Joueur joueurEsku = unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.SIX_COUPE));
+    Joueur joueurPriorite3 = unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.SIX_COUPE));
+    Equipe equipe = new Equipe (joueurEsku, joueurPriorite3, "E1");
 
-    int bonus = new FauxJeu().pointsBonus(joueurEsku);
+    int bonus = new FauxJeu().pointsBonus(equipe);
 
     assertThat(bonus).isEqualTo(1);
   }

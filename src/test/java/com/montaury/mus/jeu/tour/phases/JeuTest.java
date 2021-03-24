@@ -1,6 +1,7 @@
 package com.montaury.mus.jeu.tour.phases;
 
 import com.montaury.mus.jeu.carte.Carte;
+import com.montaury.mus.jeu.joueur.Equipe;
 import com.montaury.mus.jeu.joueur.Joueur;
 import com.montaury.mus.jeu.joueur.Opposants;
 import org.junit.jupiter.api.Test;
@@ -115,12 +116,15 @@ class JeuTest {
   }
 
   @Test
-  void devrait_accorder_un_bonus_de_3_pour_31() {
+  void devrait_accorder_un_bonus_de_6_pour_31_et_31() {
     Joueur joueurEsku = unJoueurAvec(main(Carte.VALET_EPEE, Carte.AS_BATON, Carte.VALET_BATON, Carte.VALET_COUPE));
+    Joueur joueurPriorite3 = unJoueurAvec(main(Carte.VALET_EPEE, Carte.AS_BATON, Carte.VALET_BATON, Carte.VALET_COUPE));
 
-    int pointsBonus = new Jeu().pointsBonus(joueurEsku);
+    Equipe equipe = new Equipe(joueurEsku, joueurPriorite3, "E1");
 
-    assertThat(pointsBonus).isEqualTo(3);
+    int pointsBonus = new Jeu().pointsBonus(equipe);
+
+    assertThat(pointsBonus).isEqualTo(6);
   }
 
   @Test
