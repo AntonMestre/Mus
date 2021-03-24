@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import static com.montaury.mus.jeu.tour.phases.dialogue.TypeChoix.PASO;
+import static com.montaury.mus.jeu.tour.phases.dialogue.TypeChoix.*;
 
 public class Dialogue {
   private final List<ChoixJoueur> choix = new ArrayList<>();
@@ -16,6 +16,9 @@ public class Dialogue {
     Iterator<Joueur> iteratorJoueur = opposants.itererDansLOrdre();
     do {
       Joueur parlant = iteratorJoueur.next();
+      if(!choix.isEmpty() && dernierChoix().est(IDOKI)){
+        parlant = iteratorJoueur.next();
+      }
       Choix choixJoueur = parlant.interfaceJoueur.faireChoixParmi(prochainsChoixPossibles());
       affichage.choixFait(parlant, choixJoueur);
       ajouter(choixJoueur, parlant);
@@ -29,11 +32,26 @@ public class Dialogue {
   }
 
   boolean enCours() {
-    return choix.size() <= 1 || (!dernierChoix().metFinAuDialogue() && !dernierChoix().est(PASO));
+    if (choix.size() >= 2) {
+      if (dernierChoix().est(IDOKI) && avantDernierChoix().est(IDOKI)) return false;
+      if (choix.size() >= 4 && quatreDerniersChoixSontPaso()) return false;
+      if (dernierChoix().metFinAuDialogue()) return false;
+    }
+    return true;
   }
 
   private Choix dernierChoix() {
     return choix.get(choix.size() - 1).choix;
+  }
+  private Choix avantDernierChoix() {
+    return choix.get(choix.size() - 2).choix;
+  }
+
+  private boolean quatreDerniersChoixSontPaso() {
+    return !choix.get(choix.size()-4).choix.est(PASO)
+      || !choix.get(choix.size()-3).choix.est(PASO)
+      || !choix.get(choix.size()-2).choix.est(PASO)
+      || !choix.get(choix.size()-1).choix.est(PASO);
   }
 
   private List<TypeChoix> prochainsChoixPossibles() {

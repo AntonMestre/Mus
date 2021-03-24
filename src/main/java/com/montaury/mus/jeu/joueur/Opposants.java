@@ -5,23 +5,30 @@ import java.util.List;
 
 public class Opposants {
   private Joueur joueurEsku;
+  private Joueur joueurPriorite2;
+  private Joueur joueurPriorite3;
   private Joueur joueurZaku;
 
-  public Opposants(Joueur joueurEsku, Joueur joueurZaku) {
+  public Opposants(Joueur joueurEsku, Joueur joueurPriorite2, Joueur joueurPriorite3, Joueur joueurZaku) {
     this.joueurEsku = joueurEsku;
+    this.joueurPriorite2 = joueurPriorite2;
+    this.joueurPriorite3 = joueurPriorite3;
     this.joueurZaku = joueurZaku;
   }
 
   public void tourner() {
-    Joueur tmp = joueurEsku;
-    joueurEsku = joueurZaku;
-    joueurZaku = tmp;
+      Joueur tmp = joueurEsku;
+      joueurEsku = joueurPriorite2;
+      joueurPriorite2 = joueurPriorite3;
+      joueurPriorite3 = joueurZaku;
+      joueurZaku = tmp;
   }
 
   public Joueur joueurEsku() {
     return joueurEsku;
   }
-
+  public Joueur joueurPriorite2() { return joueurPriorite2; }
+  public Joueur joueurPriorite3() { return joueurPriorite3; }
   public Joueur joueurZaku() {
     return joueurZaku;
   }
@@ -31,7 +38,7 @@ public class Opposants {
   }
 
   public List<Joueur> dansLOrdre() {
-    return List.of(joueurEsku, joueurZaku);
+      return List.of(joueurEsku, joueurPriorite2, joueurPriorite3, joueurZaku);
   }
 
   private static class IteratorInfini implements Iterator<Joueur> {
@@ -51,7 +58,18 @@ public class Opposants {
     @Override
     public Joueur next() {
       Joueur next = suivant;
-      suivant = suivant == opposants.joueurEsku ? opposants.joueurZaku : opposants.joueurEsku;
+      if (suivant == opposants.joueurEsku) {
+        suivant = opposants.joueurPriorite2;
+      }
+      else if (suivant == opposants.joueurPriorite2) {
+        suivant = opposants.joueurPriorite3;
+      }
+      else if (suivant == opposants.joueurPriorite3) {
+        suivant = opposants.joueurZaku;
+      }
+      else if (suivant == opposants.joueurZaku) {
+        suivant = opposants.joueurEsku;
+      }
       return next;
     }
   }

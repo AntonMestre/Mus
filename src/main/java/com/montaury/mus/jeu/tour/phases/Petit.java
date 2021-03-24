@@ -17,20 +17,25 @@ public class Petit extends Phase {
 
   @Override
   protected Joueur meilleurParmi(Opposants opposants) {
-    Joueur joueurEsku = opposants.joueurEsku();
-    Joueur joueurZaku = opposants.joueurZaku();
-    List<Carte> cartesJoueurEsku = joueurEsku.main().cartesDuPlusGrandAuPlusPetit();
-    List<Carte> cartesJoueurZaku = joueurZaku.main().cartesDuPlusGrandAuPlusPetit();
+    Joueur meilleurJoueurEquipe1 = comparerDeuxJoueurs(opposants.joueurEsku(), opposants.joueurPriorite3());
+    Joueur meilleurJoueurEquipe2 = comparerDeuxJoueurs(opposants.joueurPriorite2(), opposants.joueurZaku());
+    return comparerDeuxJoueurs(meilleurJoueurEquipe1, meilleurJoueurEquipe2);
+  }
+
+  protected Joueur comparerDeuxJoueurs(Joueur joueur1, Joueur joueur2) {
+    List<Carte> cartesJoueur1 = joueur1.main().cartesDuPlusGrandAuPlusPetit();
+    List<Carte> cartesJoueur2 = joueur2.main().cartesDuPlusGrandAuPlusPetit();
 
     for (int i = Main.TAILLE - 1; i >= 0; i--) {
-      ValeurCarte.Comparaison compare = cartesJoueurEsku.get(i).comparerAvec(cartesJoueurZaku.get(i));
+      ValeurCarte.Comparaison compare = cartesJoueur1.get(i).comparerAvec(cartesJoueur2.get(i));
       if (compare == PLUS_PETITE) {
-        return joueurEsku;
+        return joueur1;
       }
       if (compare == PLUS_GRANDE) {
-        return joueurZaku;
+        return joueur2;
       }
     }
-    return joueurEsku;
+    // En cas d'égalité, le 1er joueur passé en paramètres est considéré comme prioritaire
+    return joueur1;
   }
 }

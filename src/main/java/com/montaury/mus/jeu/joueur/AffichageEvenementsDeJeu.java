@@ -11,12 +11,11 @@ public interface AffichageEvenementsDeJeu {
   void mancheTerminee(Partie.Score score);
   void nouveauTour(Opposants opposants);
   void tourTermine(Opposants opposants, Manche.Score score);
-
   void choixFait(Joueur joueur, Choix choix);
 
   void nouvelleMain(Joueur joueur);
 
   void nouvellePhase(Phase phase);
-
+  void finPhase(Phase phase, Phase.Resultat resultat);
   void partieTerminee(Partie.Resultat resultat);
 }

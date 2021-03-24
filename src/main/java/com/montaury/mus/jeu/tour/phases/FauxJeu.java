@@ -16,10 +16,16 @@ public class FauxJeu extends Phase {
   }
 
   @Override
+  public boolean peutSeDerouler(Opposants opposants) {
+    return (peutParticiper(opposants.joueurEsku()) && peutParticiper(opposants.joueurPriorite3())) && peutParticiper(opposants.joueurPriorite2()) && peutParticiper(opposants.joueurZaku());
+  }
+
+  @Override
   protected Joueur meilleurParmi(Opposants opposants) {
-    int pointsJoueurEsku = opposants.joueurEsku().main().pointsPourJeu();
-    int pointsJoueurZaku = opposants.joueurZaku().main().pointsPourJeu();
-    return pointsJoueurEsku >= pointsJoueurZaku ? opposants.joueurEsku() : opposants.joueurZaku();
+    Joueur meilleurJoueurEquipe1 = opposants.joueurEsku().main().pointsPourJeu() >= opposants.joueurPriorite3().main().pointsPourJeu() ? opposants.joueurEsku() : opposants.joueurPriorite3();
+    Joueur meilleurJoueurEquipe2 = opposants.joueurPriorite2().main().pointsPourJeu() >= opposants.joueurZaku().main().pointsPourJeu() ? opposants.joueurPriorite2() : opposants.joueurZaku();
+
+    return meilleurJoueurEquipe1.main().pointsPourJeu() >= meilleurJoueurEquipe2.main().pointsPourJeu() ? meilleurJoueurEquipe1 : meilleurJoueurEquipe2;
   }
 
   @Override

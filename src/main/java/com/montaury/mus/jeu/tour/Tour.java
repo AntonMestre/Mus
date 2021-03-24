@@ -37,13 +37,12 @@ public class Tour {
   public void jouer(Opposants opposants, Manche.Score score) {
     affichage.nouveauTour(opposants);
     new Mus(paquet, defausse, affichage).jouer(opposants);
-
     ResultatsPhases resultats = new ResultatsPhases();
     Iterator<Phase> phases = phasesJouablesPar(opposants).iterator();
     do {
       Phase.Resultat resultat = phases.next().jouer(affichage, opposants, score);
       resultats.ajouter(resultat);
-    } while (phases.hasNext() && score.vainqueur().isEmpty());
+    } while (phases.hasNext() && score.equipeVainqueure().isEmpty());
     resultats.attribuerPointsRestants(score);
   }
 
@@ -64,10 +63,10 @@ public class Tour {
 
     public void attribuerPointsRestants(Manche.Score score) {
       Iterator<Phase.Resultat> resultatPhase = resultats.iterator();
-      while (resultatPhase.hasNext() && score.vainqueur().isEmpty()) {
+      while (resultatPhase.hasNext() && score.equipeVainqueure().isEmpty()) {
         Phase.Resultat resultat = resultatPhase.next();
-        resultat.vainqueur().ifPresent(vainqueur ->
-          score.scorer(vainqueur, resultat.pointsEnSuspens + resultat.bonus));
+        resultat.equipeVainqueure().ifPresent(vainqueur ->
+                score.scorer(vainqueur, resultat.pointsEnSuspens + resultat.bonus));
       }
     }
   }

@@ -13,8 +13,10 @@ class FauxJeuTest {
   @Test
   void ne_doit_pas_se_derouler_si_un_seul_des_joueurs_a_le_jeu() {
     Opposants opposants = new Opposants(
-      unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.SIX_COUPE)),
-      unJoueurAvec(main(Carte.VALET_PIECE, Carte.CAVALIER_PIECE, Carte.ROI_BATON, Carte.AS_PIECE))
+            unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.SIX_COUPE)),
+            unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.SIX_COUPE)),
+            unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.SIX_COUPE)),
+            unJoueurAvec(main(Carte.VALET_PIECE, Carte.CAVALIER_PIECE, Carte.ROI_BATON, Carte.AS_PIECE))
     );
 
     boolean peutSeDerouler = new FauxJeu().peutSeDerouler(opposants);
@@ -25,8 +27,10 @@ class FauxJeuTest {
   @Test
   void doit_se_derouler_si_personne_n_a_le_jeu() {
     Opposants opposants = new Opposants(
-      unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.SIX_COUPE)),
-      unJoueurAvec(main(Carte.VALET_PIECE, Carte.SIX_PIECE, Carte.QUATRE_BATON, Carte.AS_PIECE))
+            unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.SIX_COUPE)),
+            unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.SIX_COUPE)),
+            unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.SIX_COUPE)),
+            unJoueurAvec(main(Carte.VALET_PIECE, Carte.SIX_PIECE, Carte.QUATRE_BATON, Carte.AS_PIECE))
     );
 
     boolean peutSeDerouler = new FauxJeu().peutSeDerouler(opposants);
@@ -38,8 +42,10 @@ class FauxJeuTest {
   void devrait_faire_gagner_le_joueur_ayant_le_plus_grand_nombre_de_points() {
     Joueur joueurZaku = unJoueurAvec(main(Carte.VALET_PIECE, Carte.SIX_PIECE, Carte.QUATRE_BATON, Carte.ROI_COUPE));
     Opposants opposants = new Opposants(
-      unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.SIX_COUPE)),
-      joueurZaku
+            unJoueurAvec(main(Carte.DEUX_BATON, Carte.TROIS_PIECE, Carte.QUATRE_BATON, Carte.SIX_COUPE)),
+            unJoueurAvec(main(Carte.TROIS_BATON, Carte.DEUX_PIECE, Carte.DEUX_BATON, Carte.SIX_COUPE)),
+            unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.SIX_COUPE)),
+            joueurZaku
     );
 
     Joueur vainqueur = new FauxJeu().meilleurParmi(opposants);
@@ -51,8 +57,10 @@ class FauxJeuTest {
   void devrait_faire_gagner_le_joueur_esku_en_cas_d_egalite() {
     Joueur joueurEsku = unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.SIX_COUPE));
     Opposants opposants = new Opposants(
-      joueurEsku,
-      unJoueurAvec(main(Carte.VALET_PIECE, Carte.SIX_PIECE, Carte.QUATRE_BATON, Carte.AS_PIECE))
+            joueurEsku,
+            unJoueurAvec(main(Carte.VALET_PIECE, Carte.SIX_PIECE, Carte.QUATRE_BATON, Carte.AS_PIECE)),
+            unJoueurAvec(main(Carte.VALET_PIECE, Carte.SIX_PIECE, Carte.QUATRE_BATON, Carte.AS_PIECE)),
+            unJoueurAvec(main(Carte.VALET_PIECE, Carte.SIX_PIECE, Carte.QUATRE_BATON, Carte.AS_PIECE))
     );
 
     Joueur vainqueur = new FauxJeu().meilleurParmi(opposants);

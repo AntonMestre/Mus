@@ -9,24 +9,35 @@ import java.util.stream.Collectors;
 public class AffichageConsoleEvenementsDeJeu implements AffichageEvenementsDeJeu {
   private final Joueur joueurCourant;
 
+  public static final String ANSI_RESET = "\u001B[0m";
+  public static final String ANSI_BLACK = "\u001B[30m";
+  public static final String ANSI_RED = "\u001B[31m";
+  public static final String ANSI_GREEN = "\u001B[32m";
+  public static final String ANSI_YELLOW = "\u001B[33m";
+  public static final String ANSI_BLUE = "\u001B[34m";
+  public static final String ANSI_PURPLE = "\u001B[35m";
+  public static final String ANSI_CYAN = "\u001B[36m";
+  public static final String ANSI_WHITE = "\u001B[37m";
+
   public AffichageConsoleEvenementsDeJeu(Joueur courant) {
     this.joueurCourant = courant;
   }
 
   @Override
   public void nouvellePartie() {
-    println("Nouvelle partie");
+    println(ANSI_PURPLE + "Nouvelle partie" + ANSI_RESET);
   }
 
   @Override
   public void nouvelleManche() {
-    println("Nouvelle manche");
+    println(ANSI_CYAN + "Nouvelle manche" + ANSI_RESET);
   }
 
   @Override
   public void mancheTerminee(Partie.Score score) {
-    println("Manche terminée");
-    score.resultatManches().forEach(manche -> println("Vainqueur : " + manche.vainqueur().nom() + ", score du perdant : " + manche.pointsVaincu()));
+    println(ANSI_CYAN + "Manche terminée" + ANSI_RESET);
+
+    score.resultatManches().forEach(manche -> println("Vainqueur : " + manche.equipeVainqueure().nom() + ", score du perdant : " + manche.pointsVaincu()));
   }
 
   @Override
@@ -38,7 +49,9 @@ public class AffichageConsoleEvenementsDeJeu implements AffichageEvenementsDeJeu
   public void tourTermine(Opposants opposants, Manche.Score score) {
     println("Tour terminé");
     opposants.dansLOrdre().forEach(this::afficherMain);
-    score.scoreParJoueur().forEach((key, value) -> println("Score " + key.nom() + ": " + value));
+
+    score.scoreParEquipe().forEach((key, value) -> println("Score " + key.nom() + ": " + value));
+
     println();
   }
 
@@ -66,13 +79,20 @@ public class AffichageConsoleEvenementsDeJeu implements AffichageEvenementsDeJeu
 
   @Override
   public void nouvellePhase(Phase phase) {
-    println("Nouvelle phase: " + phase.nom());
+    println(ANSI_RED + "Nouvelle phase: " + phase.nom() + ANSI_RESET);
+  }
+
+  @Override
+  public void finPhase(Phase phase,Phase.Resultat resultat) {
+    println("Résultat de la phase: equipe vainqueure -> " + resultat.equipeVainqueure().get().nom());
   }
 
   @Override
   public void partieTerminee(Partie.Resultat resultat) {
     println("La partie est terminée !");
-    println("Vainqueur: " + resultat.vainqueur());
+
+    println("Vainqueur: " + resultat.equipeVainqueure());
+
   }
 
   private void println(String string) {
