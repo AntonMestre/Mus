@@ -32,6 +32,8 @@ public class Mus {
     Partie.Resultat resultat = partie.jouer(new Opposants(humain, ordinateur1,ordinateur2,ordinateur3));
 
     System.out.println("Le vainqueur de la partie est " + resultat.equipeVainqueure().nom());
+
+    // Test après Commit
   }
 }
 
