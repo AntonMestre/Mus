@@ -1,5 +1,6 @@
 package com.montaury.mus.jeu.tour.phases;
 
+import com.montaury.mus.jeu.joueur.Equipe;
 import com.montaury.mus.jeu.joueur.Joueur;
 import com.montaury.mus.jeu.joueur.Opposants;
 
@@ -36,5 +37,13 @@ public class Paires extends Phase {
       return vainqueur.main().getPaires().pointsBonus();
     }
     return 0;
+  }
+  
+  @Override
+  public int pointsBonus(Equipe vainqueur) {
+    int pointsBonus = 0;
+    pointsBonus += vainqueur.getJoueurs().get(0).main().aDesPaires() ? vainqueur.getJoueurs().get(0).main().getPaires().pointsBonus() : 0;
+    pointsBonus += vainqueur.getJoueurs().get(1).main().aDesPaires() ? vainqueur.getJoueurs().get(1).main().getPaires().pointsBonus() : 0;
+    return pointsBonus;
   }
 }
